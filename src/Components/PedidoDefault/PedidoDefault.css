@@ -1,0 +1,38 @@
+.PedidoTitles{
+    width: 80%;
+    height: 50px;
+    background-color: var(--primario);
+    color:#fff;
+    display: flex;
+    align-items: center;
+}
+.d-25{
+    width: 25%;
+    padding: 0 10px;
+}
+.d-12-5{
+    width:12.5%;
+}
+.PedidoProduct{
+    width: 100%;
+    height: 50px;
+    color:#000;
+    display: flex;
+    align-items: center;
+}
+.inputCant{
+    width: 70%;
+    height: 30px;
+    background: #fff;
+    border: solid 1px #ececec;
+    border-radius:10px;
+    box-shadow: 4px 4px 4px #ececec;
+}
+.formularioProductDefault{
+    width: 80%;
+}
+.formulario-btn{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 30px;
+}

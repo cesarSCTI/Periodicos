@@ -1,0 +1,14 @@
+.aside{
+    background: var(--primario);
+    height: 100vh;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /*align-items:center;*/
+}
+.opcion-1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
