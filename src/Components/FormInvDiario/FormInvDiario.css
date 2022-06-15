@@ -1,0 +1,26 @@
+.formInv{
+    display: block;
+    width: 40%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    border: solid 1px #ececec;
+    padding: 50px;
+    box-shadow: 0px 4px 4px #ececec;
+}
+.spaceProduct{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.spaceProduct p{
+    font-weight: 600;
+}
+.spaceProduct input{
+    outline: none;
+    width: 70%;
+    border: solid 1px #ececec;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0px 4px 4px #ececec;
+}

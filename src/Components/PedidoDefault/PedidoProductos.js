@@ -1,9 +1,6 @@
-import React,  { useState } from "react"
+import React from "react"
 
 const PedidoProductos = ({Producto}) => {
-
-    const [Product, setProduct] = useState(Producto)
-
   return (
     <div className='PedidoProduct'>
         <div className='d-25 '>Nombre</div>

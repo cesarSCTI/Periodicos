@@ -1,16 +1,40 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Aside from './Components/Aside/Aside';
-import PedidoDefault from './Components/PedidoDefault/PedidoDefault';
+import Default from './Components/Default/Default';
 import Principal from './Components/Principal/Principal';
+import ClientesInterior from './Pages/Clientes/ClientesInterior';
+import ClientesLista from './Pages/Clientes/ClientesLista';
+import ClientesNuevo from './Pages/Clientes/ClientesNuevo';
+import InvDiario from './Pages/InventarioDiario/InvDiario';
+import Pedidos from './Pages/Pedidos/Pedidos';
+import Periodicos from './Pages/Productos/Periodicos';
+import ProductosList from './Pages/Productos/ProductosList';
 
 function App() {
   return (
-    <div className='main'>
-      <Aside />
-      <Principal>
-        <PedidoDefault/>
-      </Principal>
-    </div>
+    <BrowserRouter>
+      <div className='main'>
+        <Aside />
+        <Principal>
+        <Routes>
+          <Route path='/' element={<Default />} />
+          {/*inventario Diario*/}
+          <Route path='/inventario-diario' element={<InvDiario/>} />
+          {/*Clientes*/}
+          <Route path='/clientes' element={<ClientesLista />} />
+          <Route path='/clientes/:id' element={<ClientesInterior/>}/>
+          <Route path='/clientes/:nuevo' element={<ClientesNuevo/>}/>
+          {/*Productos*/}
+          <Route path='/productos' element={<ProductosList />}/>
+          <Route path='/productos/:id' element={<Periodicos />}/>
+          <Route path='/productos/nuevo' element={<Periodicos />}/>
+          {/*Pedidos*/}
+          <Route path='/pedidos' element={<Pedidos />}/>
+        </Routes>
+        </Principal>
+      </div>
+    </BrowserRouter>
   );
 }
 

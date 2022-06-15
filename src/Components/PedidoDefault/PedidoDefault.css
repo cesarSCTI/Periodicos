@@ -5,13 +5,7 @@
     color:#fff;
     display: flex;
     align-items: center;
-}
-.d-25{
-    width: 25%;
-    padding: 0 10px;
-}
-.d-12-5{
-    width:12.5%;
+    margin-top: 40px;
 }
 .PedidoProduct{
     width: 100%;

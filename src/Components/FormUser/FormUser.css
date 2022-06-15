@@ -1,0 +1,34 @@
+.formUser{
+    display: flex;
+    flex-wrap: wrap;
+    width:80%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.formUser label{
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+.labelInput{
+    display: block;
+    margin-bottom: 15px;
+}
+.UserFormInput{
+    background:#fff;
+    border:#ececec solid 1px;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px 15px;
+    height: 20px;
+    box-shadow:4px 4px 4px #ececec;
+    width: 100%;
+}
+.onlyRead{
+    background: #ececec;
+}
+.end{
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,39 @@
+.morado{
+    background: var(--primario);
+    color:#fff;
+}
+.listName{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: solid 1px var(--primario);
+    border-left: solid 1px var(--primario);
+    border-right: solid 1px var(--primario);
+}
+.listNameBody{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    transition: .5s;
+}
+.listNameBody:hover{
+    background: var(--cuarto);
+}
+.opc{
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.border{
+    border-bottom: solid 1px #000;
+    border-left: solid 1px #000;
+    border-right: solid 1px #000;
+}
+.status{
+    text-align: center;
+    background:var(--success);
+    padding: 5px 25px;
+    border-radius: 30px;
+}

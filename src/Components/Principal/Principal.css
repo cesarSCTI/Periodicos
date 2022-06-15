@@ -1,8 +1,16 @@
 .principal{
     height: 100vh;
+    overflow-y: scroll;
     width: calc(100vw - 250px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     /*align-items: center;*/
+    scrollbar-color: var(--primario) var(--tercero);
+    scrollbar-width: thin;
+}
+.principal::-webkit-scrollbar{
+   width:10px;
+    background:var(--primario);
+    scrollbar-width: thin;
 }

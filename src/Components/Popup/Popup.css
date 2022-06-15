@@ -1,0 +1,22 @@
+.Popup{
+    background: #fff;
+    height: 99vh;
+    width: 80%;
+    border: solid 1px #ececec;
+    box-shadow: 4px 4px 4px #ececec;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Popup-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Popup-content p{
+    margin-bottom: 50px;
+}

@@ -1,0 +1,31 @@
+.Loader{
+    height: 100px;
+    width: 100px;
+    border-top: 3px solid var(--secundario);
+    border-bottom: 3px solid var(--secundario);
+    border-radius: 100px;
+    transition:infinite;
+    animation-duration: .5s;
+    animation-name: loader;
+    animation-iteration-count: infinite;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+.loaderInterno{
+    height: 70px;
+    width: 70px;
+    border-left: 4px solid var(--tercero);
+    border-right: 4px solid var(--tercero);
+    border-radius: 100px;
+    transition:infinite;
+}
+
+@keyframes loader {
+    30%{transform: rotate(90deg);}
+    50%{transform: rotate(180deg);}
+    80%{transform: rotate(270deg);}
+    100%{transform: rotate(360deg);}
+}

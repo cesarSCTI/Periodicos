@@ -16,6 +16,13 @@ export const Error = ({Text, F_Click}) =>{
     </div>
   )
 }
+export const Opc = ({Text, F_Click}) =>{
+  return (
+    <div className='btn actions opcBtn' onClick={F_Click}>
+      {Text}
+  </div>
+  )
+}
 export const NavPrincipal = ({Text, children, F_Click}) =>{
   return(
     <div className='btn actions NavPrincipal' onClick={F_Click}>
@@ -26,7 +33,7 @@ export const NavPrincipal = ({Text, children, F_Click}) =>{
 }
 export const SubNav = ({Text, F_Click}) =>{
   return(
-    <div className='btn actions SubNav' onClick={F_Click}>
+    <div className='subBtn actions SubNav' onClick={F_Click}>
         {Text}
     </div>
   )
