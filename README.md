@@ -1,4 +1,4 @@
-# Periodicos | César Guzmán | Proyecto Gestion de Periodicos
+# César Guzmán & Alan Castillo | Proyecto Gestion de Periodicos
 ### Proyecto Periodicos
 > Sistema de gestion de entradas y salidas de periodicos, donde se genera Adeudo por usuario
 
