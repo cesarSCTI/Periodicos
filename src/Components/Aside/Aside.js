@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import {InventarioBTN, NavPrincipal, SubNav} from '../Buttons/Buttons';
+import {InventarioBTN, NavPrincipal} from '../Buttons/Buttons';
 import './Aside.css';
 
 const Aside = () => {
@@ -13,11 +13,12 @@ const Aside = () => {
       </div>
       <div className='opcion'>
         <Link to="clientes"><NavPrincipal Text="Fichas Clientes"><i className='bx bx-user-pin'></i></NavPrincipal></Link>
-        <Link to="clientes/nuevo"><SubNav Text="Crear Cliente" /></Link>
+      </div>
+      <div className='opcion'>
+      <Link to="cobranza"><NavPrincipal Text="Cobranza"><i className='bx bx-money-withdraw'></i></NavPrincipal></Link>
       </div>
       <div className='opcion'>
         <Link to="productos/"><NavPrincipal Text="Productos"><i className='bx bx-book-open' ></i></NavPrincipal></Link>
-        <Link to="productos/nuevo"><SubNav Text="Crear Producto" /></Link>
       </div>
       <div className='opcion'>
       <Link to="pedidos"><NavPrincipal Text="Pedidos"><i className='bx bx-cube-alt' ></i></NavPrincipal></Link>

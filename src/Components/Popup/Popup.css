@@ -1,22 +1,27 @@
 .Popup{
-    background: #fff;
+    background:rgba(255, 255, 255, 0.664);
     height: 99vh;
     width: 80%;
-    border: solid 1px #ececec;
-    box-shadow: 4px 4px 4px #ececec;
+    /*border: solid 1px #ececec;
+    box-shadow: 4px 4px 4px #ececec;*/
     position: absolute;
     top: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 .Popup-content{
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    background:#fff;
+    border: solid 1px #ececec;
+    box-shadow: 4px 4px 4px #ececec;
+    overflow-y: auto;
 }
 .Popup-content p{
-    margin-bottom: 50px;
+    margin: 0px;
 }

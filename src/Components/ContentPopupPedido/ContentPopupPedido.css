@@ -1,0 +1,33 @@
+.contentPago{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+.contentPago label, p{
+    padding: 15px 0px 10px 0px;
+}
+.inputFail{
+    padding: 10px;
+    background:var(--tercero);
+    border-radius:25px;
+    width:50%;
+    height: 20px;
+}
+.formPago{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.inputPago{
+    padding: 10px;
+    background:#fff;
+    border:solid 1px #ececec;
+    box-shadow: 4px 4px 4px #ececec;
+    border-radius:25px;
+    width:50%;
+    height: 20px;
+}
+.formPago .btn{
+    margin-top: 25px;
+}

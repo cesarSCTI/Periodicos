@@ -7,6 +7,7 @@
   --error:  #FD5D5D;
   --complementario:#F8ECD1;
   font-family: 'Inter', sans-serif;
+  font-size: 14px;
 }
 a{
   text-decoration: none;
@@ -24,6 +25,7 @@ a{
     align-items: center;
     justify-content: center;
 }
+
 .d-50{
   width: 48%;
 }
@@ -31,7 +33,7 @@ a{
   width: 100%;
 }
 .d-33{
-  width: 32%;
+  width: 30%;
 }
 .d-25{
   width: 23%;
@@ -51,4 +53,7 @@ a{
 }
 .d-40{
   width:39%;
+}
+.d-60{
+  width:59%;
 }
