@@ -1,13 +1,22 @@
 :root{
-  --primario: #85586F;
+  /*--primario: #85586F;
   --secundario: #AC7D88;
   --tercero: #DEB6AB;
   --cuarto: #F8ECD1;
   --success: #C0EDA6;
   --error:  #FD5D5D;
+  --complementario:#F8ECD1;*/
+  --primario: #06283D;
+  --secundario: #1363DF;
+  --tercero: #47B5FF;
+  --cuarto: #DFF6FF;
+  --success: #C0EDA6;
+  --error:  #FD5D5D;
   --complementario:#F8ECD1;
+  --neutro:#202020;
+  --opc:#9FD3C7;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
 }
 a{
   text-decoration: none;

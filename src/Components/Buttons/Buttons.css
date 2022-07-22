@@ -4,7 +4,7 @@
     align-items: center;
     transition: .7s;
     cursor:pointer;
-    font-size: 16px;
+    font-size: 12px;
 }
 .subBtn{
     display: flex;
@@ -39,9 +39,9 @@
     color:var(--error);
 }
 .opcBtn{
-    background: #FFF7BC;
+    background: var(--opc);
     color:#000;
-    border:solid 1px #FFF7BC;
+    border:solid 1px var(--opc);
     border-radius: 15px;
     margin-right: 10px;
 }
@@ -49,8 +49,8 @@
     background: #fff;
 }
 .NavPrincipal{
-    background: var(--secundario);
-    color:#fff;
+    color: var(--neutro);
+    /*background:#fff;*/
     display: flex;
     justify-content:flex-start;
     align-items: center;
@@ -59,6 +59,9 @@
 .NavPrincipal:hover{
     background: var(--cuarto);
     color:#000;
+}
+.NavPrincipal:hover .icon{
+    color:var(--secundario);
 }
 .SubNav{
     background: var(--tercero);

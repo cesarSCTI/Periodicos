@@ -17,6 +17,7 @@
     align-items: center;
     padding: 5px 10px;
     transition: .5s;
+    background: #fff;
 }
 .listNameBody:hover{
     background: var(--cuarto);
@@ -27,7 +28,7 @@
     align-items: center;
 }
 .border{
-    border-bottom: solid 1px #000;
-    border-left: solid 1px #000;
-    border-right: solid 1px #000;
+    border-bottom: solid 1px #ececec;
+    border-left: solid 1px #ececec;
+    border-right: solid 1px #ececec;
 }

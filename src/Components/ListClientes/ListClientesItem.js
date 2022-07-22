@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 import { Opc, Error } from '../Buttons/Buttons';
 import './ListClientes.css';
 
-const ListClientesItem = () => {
+const ListClientesItem = ({cl}) => {
   return (
     <div className='container'>
     <div className='listNameBody border'>
-      <div className='d-10'>#000</div>
-      <div className='d-20'>Alan Castillo</div>
-      <div className='d-10'>1010101010</div>
-      <div className='d-30'>Paseo de los olivos #30</div>
-      <div className='d-10'>$156.00</div>
+      <div className='d-10'>#{cl.K_Cliente}</div>
+      <div className='d-20'>{cl.Nombre}</div>
+      <div className='d-10'>{cl.Telefono}</div>
+      <div className='d-30'>{cl.Direccion}</div>
+      <div className='d-10'>${cl.Adeudo}</div>
       <div className='d-20 opc'>
-       <Link to="/clientes/1"> <Opc Text="Editar" /></Link>
+       <Link to={`/clientes/${cl.K_Cliente}`}> <Opc Text="Editar" /></Link>
 
-        <Error Text="X"/>
+        <Error Text="Eliminar"/>
         </div>
     </div>
 </div>

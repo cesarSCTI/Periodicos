@@ -5,9 +5,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /*align-items: center;*/
     scrollbar-color: var(--primario) var(--tercero);
     scrollbar-width: thin;
+    background: #f6f8fb;
 }
 .principal::-webkit-scrollbar{
    width:10px;

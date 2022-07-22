@@ -6,24 +6,20 @@ import './Aside.css';
 const Aside = () => {
   return (
     <div className='aside'>
-      <div className='opcion-1'>
-        <Link to="/inventario-diario">
-          <InventarioBTN Text="Inventario Diario"><i className='bx bx-calendar'></i></InventarioBTN>
-        </Link>
+      <div className='opcion'>
+        <span className="opcionTitle">Administración</span>
+        <Link to="/"><NavPrincipal Text="Dashbord"><i className='bx bx-home-alt-2'></i></NavPrincipal></Link>
+        <Link to="clientes"><NavPrincipal Text="Clientes"><i className='bx bx-user-pin'></i></NavPrincipal></Link>
       </div>
       <div className='opcion'>
-        <Link to="clientes"><NavPrincipal Text="Fichas Clientes"><i className='bx bx-user-pin'></i></NavPrincipal></Link>
+        <span className="opcionTitle">Cobranza</span>
+        <Link to="cobranza"><NavPrincipal Text="Cobranza"><i className='bx bx-money-withdraw'></i></NavPrincipal></Link>
       </div>
       <div className='opcion'>
-      <Link to="cobranza"><NavPrincipal Text="Cobranza"><i className='bx bx-money-withdraw'></i></NavPrincipal></Link>
-      </div>
-      <div className='opcion'>
+        <span className="opcionTitle">operaciones</span>
+        <Link to="/inventario-diario"><NavPrincipal Text="Inventario diario"><i className='bx bx-user-pin'></i></NavPrincipal></Link>
         <Link to="productos/"><NavPrincipal Text="Productos"><i className='bx bx-book-open' ></i></NavPrincipal></Link>
-      </div>
-      <div className='opcion'>
-      <Link to="pedidos"><NavPrincipal Text="Pedidos"><i className='bx bx-cube-alt' ></i></NavPrincipal></Link>
-      </div>
-      <div className='opcion'>
+        <Link to="pedidos"><NavPrincipal Text="Pedidos"><i className='bx bx-cube-alt' ></i></NavPrincipal></Link>
         <NavPrincipal Text="Reportes"><i className='bx bx-bar-chart' ></i></NavPrincipal>
       </div>
     </div>
