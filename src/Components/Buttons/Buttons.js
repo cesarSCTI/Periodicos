@@ -3,24 +3,24 @@ import './Buttons.css';
 
 export const Success = ({Text, F_Click}) => {
   return (
-    <div className='btn actions success' onClick={F_Click}>
+    <button className='btn actions success' onClick={F_Click}>
         {Text}
-    </div>
+    </button>
   )
 }
 
 export const Error = ({Text, F_Click}) =>{
   return (
-    <div className='btn actions error' onClick={F_Click}>
+    <button className='btn actions error' onClick={F_Click}>
         {Text}
-    </div>
+    </button>
   )
 }
 export const Opc = ({Text, F_Click}) =>{
   return (
-    <div className='btn actions opcBtn' onClick={F_Click}>
+    <button className='btn actions opcBtn' onClick={F_Click}>
       {Text}
-  </div>
+  </button>
   )
 }
 export const NavPrincipal = ({Text, children, F_Click}) =>{

@@ -34,7 +34,7 @@ const ClientesInterior = () => {
           </Header>
           <FormUser InfoUser={Client[0]}/>
           <Header Text="Pedido por defecto"/>
-          <PedidoDefault/>
+          <PedidoDefault ClienteID={parameter.id} />
         </>
       }
     </>

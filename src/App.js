@@ -11,7 +11,9 @@ import InvDiario from './Pages/InventarioDiario/InvDiario';
 import Pedidos from './Pages/Pedidos/Pedidos';
 import PedidosInterior from './Pages/Pedidos/PedidosInterior';
 import Periodicos from './Pages/Productos/Periodicos';
+import PeriodicosNuevo from './Pages/Productos/PeriodicosNuevo';
 import ProductosList from './Pages/Productos/ProductosList';
+import Reportes from './Pages/Reportes/Reportes';
 
 function App() {
   return (
@@ -30,12 +32,14 @@ function App() {
           {/*Productos*/}
           <Route path='/productos' element={<ProductosList />}/>
           <Route path='/productos/:id' element={<Periodicos />}/>
-          <Route path='/productos/nuevo' element={<Periodicos />}/>
+          <Route path='/productos/nuevo' element={<PeriodicosNuevo />}/>
           {/*Pedidos*/}
           <Route path='/pedidos' element={<Pedidos />}/>
           <Route path='/pedidos/:id' element={<PedidosInterior />}/>
           {/*Cobranza */}
           <Route path='/cobranza' element={<Cobranza />}/>
+          {/*Cobranza */}
+          <Route path='/reportes' element={<Reportes />}/>
         </Routes>
         </Principal>
       </div>

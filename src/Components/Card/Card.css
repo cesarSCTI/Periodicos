@@ -1,0 +1,29 @@
+.card{
+    background: #fff;
+    box-shadow: 4px 4px 4px #ececec;
+    border-radius: 15px;
+    height: 120px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.cardTitle{
+    font-size: 14px;
+    color:#020202;
+    padding: 10px;
+}
+.cardValue{
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ececec;
+}
+.cardLink{
+    color:var(--secundario);
+    padding: 10px;
+    float: right;
+    font-size: 14px;
+}
+.mesagge{
+    background: var(--opc);
+}

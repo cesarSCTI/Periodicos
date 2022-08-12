@@ -1,20 +1,8 @@
 import React from 'react'
 import { Success } from '../Buttons/Buttons';
 import './FormUser.css';
-/*
-{
-        "K_Cliente": "1",
-        "Nombre": "Maria Isabel",
-        "Apellidos": "Medina Pereyra",
-        "Telefono": "3318419424",
-        "Direccion": "Niños Heroes",
-        "Adeudo": "500.50",
-        "F_Registro": "2022-06-10 22:30:15",
-        "F_Actualizacion": "2022-07-05 22:54:21",
-        "B_Activo": "0"
-    }
-*/
-const FormUser = ({ InfoUser }) => {
+
+const FormUser = ({ InfoUser = {} }) => {
     return (
         <div className='container'>
             <form onChange={console.log()} onSubmit={console.log()} className="formUser">

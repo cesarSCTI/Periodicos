@@ -5,9 +5,10 @@ import FormInvDiario from '../../Components/FormInvDiario/FormInvDiario'
 import Header from '../../Components/Header/Header'
 
 const InvDiario = () => {
+    const date = new Date()
     return (
         <>
-            <Header Text="Productos del dia | 10-05-2022">
+            <Header Text={`Productos del dia | ${date}`}>
                 <Link to="/"><Error Text="Regresar" /></Link>
             </Header>
             <FormInvDiario/>

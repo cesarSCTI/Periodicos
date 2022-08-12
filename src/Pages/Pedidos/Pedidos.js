@@ -3,22 +3,23 @@ import Buscador from '../../Components/Buscador/Buscardor'
 import Header from '../../Components/Header/Header'
 import ListPedidos from '../../Components/ListPedidos/ListPedidos'
 import ListPedidosItem from '../../Components/ListPedidos/ListPedidosItem'
+import Loader from '../../Components/Loader/Loader'
+import { usePetitionPedidos } from './HooksPedidos'
 
 const Pedidos = () => {
-  return (
+
+const {Pedidos, handleBusqueda} = usePetitionPedidos()
+
+return (
     <>
         <Header Text="Pedidos" />
-        <Buscador />
+        <Buscador Cambio={handleBusqueda}/>
         <ListPedidos />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
-        <ListPedidosItem />
+        {
+          !Pedidos
+          ? <div className="container"><Loader /></div>
+          : Pedidos.map( (ele)=><ListPedidosItem infoOrder={ele} key={ele.K_Pedido}/> )
+        }
     </>
   )
 }

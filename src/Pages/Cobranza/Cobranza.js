@@ -1,4 +1,5 @@
 import React from 'react'
+import Card from '../../Components/Card/Card'
 import Header from '../../Components/Header/Header'
 
 const Cobranza = () => {
@@ -6,7 +7,7 @@ const Cobranza = () => {
     <>
     <Header Text="Cobranza Clientes" />
         <div className='container'>
-            cobranza 
+            <Card ancho="1002" estilo="mesagge" Texto="Seguimos trabajando..."/>
         </div>
     </>
   )

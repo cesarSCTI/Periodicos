@@ -20,7 +20,7 @@ const Aside = () => {
         <Link to="/inventario-diario"><NavPrincipal Text="Inventario diario"><i className='bx bx-user-pin'></i></NavPrincipal></Link>
         <Link to="productos/"><NavPrincipal Text="Productos"><i className='bx bx-book-open' ></i></NavPrincipal></Link>
         <Link to="pedidos"><NavPrincipal Text="Pedidos"><i className='bx bx-cube-alt' ></i></NavPrincipal></Link>
-        <NavPrincipal Text="Reportes"><i className='bx bx-bar-chart' ></i></NavPrincipal>
+        <Link to="reportes"><NavPrincipal Text="Reportes"><i className='bx bx-bar-chart' ></i></NavPrincipal></Link>
       </div>
     </div>
   )

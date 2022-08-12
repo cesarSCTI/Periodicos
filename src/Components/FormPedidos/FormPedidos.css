@@ -50,6 +50,7 @@
     padding: 10px 10px;
     background: var(--secundario);
     font-size: 14px;
+    color:#fff;
 }
 .contentProducts{
     display: flex;
