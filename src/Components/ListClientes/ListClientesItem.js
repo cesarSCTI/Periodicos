@@ -14,9 +14,7 @@ const ListClientesItem = ({cl}) => {
       <div className='d-10'>${cl.Adeudo}</div>
       <div className='d-20 opc'>
        <Link to={`/clientes/${cl.K_Cliente}`}> <Opc Text="Editar" /></Link>
-
-        <Error Text="Eliminar"/>
-        </div>
+      </div>
     </div>
 </div>
   )

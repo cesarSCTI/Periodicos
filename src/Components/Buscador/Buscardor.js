@@ -12,7 +12,7 @@ const Buscador = ({Text="Buscar", Enviar, Cambio}) => {
         <div className="Buscador">
           <input type="text" 
           className='buscadorInput'
-           placeholder='Buscar por ID' 
+           placeholder='Buscar por Nombre' 
            name="Buscador" 
            onChange={Cambio}/>
         </div>

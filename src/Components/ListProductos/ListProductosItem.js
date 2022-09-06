@@ -12,7 +12,7 @@ const ListProductosItem = ({data}) => {
         <div className='d-10'>${data.Precio}</div>
         <div className='d-30 opc'>
             <Link to={`/productos/${data.K_Producto}`}><Opc Text="Editar" /></Link>
-            <Error Text="Eliminar" />
+            {/*<Error Text="Eliminar" />*/}
         </div>
         </div>
     </div>
