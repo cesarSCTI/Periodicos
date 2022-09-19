@@ -1,20 +1,43 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import * as yup from "yup";
 
 export const useCRUDCliente = () =>{
     const parameter = useParams()
     const [Cliente, setCliente] = useState()
     const [isLoading, setIsloading] = useState(true)
+    const [sureDelete, setSureDelete] = useState(false)
+    const navigate = useNavigate()
 
+  //openPOPUP DELETE
+  const openPOPUP = () =>{
+    setSureDelete(!sureDelete)
+    console.log(sureDelete)
+  }
+  //DELETE
+   const deleteCliente = () =>{
+
+      axios.post(`https://api-rest-sist-periodico.deversite.com/api/eliminar_cliente/${parameter.id}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(()=>{
+        navigate("../clientes", { replace: true });
+      });
+   } 
 
     //GET 
     const requestCliente = async ()=>{
+      
         const response= await fetch(`https://api-rest-sist-periodico.deversite.com/clientes/${parameter.id}`)
         const data = await response.json().finally()
         setCliente(data[0])
         setIsloading(false)
+      
     }
 
     //POST
@@ -35,7 +58,6 @@ export const useCRUDCliente = () =>{
           //AXIOS
           axios.post(" https://api-rest-sist-periodico.deversite.com/api/cliente", new URLSearchParams(Cliente),{
             headers:{
-              'Content-Type': 'application/x-www-form-urlencoded'
             }} )
           .then(function (response) {
             console.log(response);
@@ -68,5 +90,5 @@ export const useCRUDCliente = () =>{
     useEffect(()=>{
         requestCliente()
     },[])
-    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange}
+    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente,sureDelete, openPOPUP}
 }
