@@ -1,24 +1,151 @@
-import React from 'react'
-import { Opc } from '../Buttons/Buttons'
-import { Link } from 'react-router-dom'
+import React,{useState} from 'react'
+import { ErrorCancel, ErrorEliminar, Opc, SuccessPago, SuccessVer } from '../Buttons/Buttons'
+import { Link, useNavigate } from 'react-router-dom'
 import './ListPedidos.css'
+import { Error,Success } from '../Buttons/Buttons'
+import axios from 'axios'
+//import { URLSearchParams } from 'url'
+import Header from '../Header/Header'
+import Loader from '../Loader/Loader'
+import Popup from '../Popup/Popup'
+import ContentPopupPedido from '../ContentPopupPedido/ContentPopupPedido'
 
 const ListPedidosItem = ({infoOrder}) => {
+  const[popPupCancelar,setPopPupCancelar] = useState(false)
+  const[popPupEliminar,setPopPupEliminar] = useState(false)
+  const[isOpen,setIsopen] = useState(false)
+  const navigate = useNavigate();
+
+  var Usuario_Cancelo = {
+    'K_Usuario_Cancelo':1
+  }
+
+  const cancelarPedido = (pedido) =>{
+    axios.post(`https://api-rest-sist-periodico.deversite.com/cancelar_pedido/${pedido}`, new URLSearchParams(Usuario_Cancelo),{
+      headers:{
+        'Content-Type':'application/x-www-form-urlencoded'
+      }
+    })
+    .then(function(response){
+      console.log(response);
+      if(response.status == 200){
+        setPopPupCancelar(false)
+        navigate("../pedidos",{replace:true});
+      }
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+    /*
+    .finally(
+      ()=>{
+        navigate("../pedidos",{replace:true});
+      }
+    )
+    */
+  }
+
+  const eliminarPedido =(pedido) =>{
+    axios.post(`https://api-rest-sist-periodico.deversite.com/eliminar_pedido/${pedido}`)
+    .then(function(response){
+      console.log(response);
+      if(response.status == 200){
+        setPopPupCancelar(false)
+        navigate("../pedidos",{replace:true});
+      }
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  }
+
+  const ActionPopup = (e) =>{
+    e.preventDefault()
+    if(isOpen){
+        setIsopen(false)
+    }else{
+        setIsopen(true)
+    }
+  }
+
+  /*
+  const eliminarPedido =(pedido) =>{
+    fetch(`https://api-rest-sist-periodico.deversite.com/eliminar_pedido/${pedido}`,{
+      method:'POST'
+    })
+    .finally(
+      ()=>{
+        navigate("../pedidos",{replace:true});
+      }
+    )
+  } 
+  */
+  
+
   return (
-    <div className='container'>
-        <div className='listNameBody border'>
-          <div className='d-10'>#{infoOrder.K_Pedido}</div>
-          <div className='d-20'>{infoOrder.D_Cliente}</div>
-          <div className='d-10'>{infoOrder.Total}</div>
-          <div className='d-20'>{infoOrder.F_Creacion}</div>
-          <div className='d-20'>
-           <span className='status'> Status </span>
-          </div>
-          <div className='d-20 opc'>
-            <Link to={`/pedidos/${infoOrder.K_Pedido}`}><Opc Text="Ver" /></Link>
+    <>
+    {
+      popPupCancelar
+      ?<Popup>
+        <Header Text="¿Estas seguro de cancelar este pedido?"/>
+        <Loader/>
+        <div className = "d-100 comboBTNS">
+          <Error Text="No" F_Click={()=>setPopPupCancelar(false)}/>
+          <Success Text="Si" F_Click={()=>cancelarPedido(infoOrder.K_Pedido)}/>
+        </div>
+      </Popup>
+      :
+      popPupEliminar
+      ?
+      <Popup>
+        <Header Text="¿Estas seguro de eliminar este pedido?"/>
+        <Loader/>
+        <div className = "d-100 comboBTNS">
+          <Error Text="No" F_Click={()=>setPopPupEliminar(false)}/>
+          <Success Text="Si" F_Click={()=>eliminarPedido(infoOrder.K_Pedido)}/>
+        </div>
+
+      </Popup>
+      :
+      <>
+        <div className='container'>
+          <div className='listNameBody border'>
+            <div className='d-10'>#{infoOrder.K_Pedido}</div>
+            <div className='d-20'>{infoOrder.D_Cliente}</div>
+            <div className='d-10'>{infoOrder.Total}</div>
+            <div className='d-20'>{infoOrder.F_Creacion}</div>
+            <div className='d-20'>
+            {
+              infoOrder.Estatus == "PAGADO"
+              ?<span className='status-pagado'>{infoOrder.Estatus}</span>
+              :infoOrder.Estatus == "GENERADO"
+              ?<span className='status-generado'>{infoOrder.Estatus}</span>
+              :<span className='status-cancelado'>{infoOrder.Estatus}</span>
+            }
+            </div>
+            <div className='d-20 opc'>
+              
+              <Link to={`/pedidos/${infoOrder.K_Pedido}`}><SuccessVer/></Link>
+              {
+                //<SuccessVer F_Click={ActionPopup}/>
+                //<Link to={`/pedidos/${infoOrder.K_Pedido}`}><SuccessVer/></Link>
+                infoOrder.Estatus == "GENERADO"
+                ?<SuccessPago F_Click={ActionPopup}/>
+                :<></>
+              }
+              {
+                infoOrder.Estatus == "GENERADO" || infoOrder.Estatus == "PAGADO"
+                ?<ErrorCancel F_Click={()=>setPopPupCancelar(true)}/>
+                :<></>
+              }
+              <ErrorEliminar F_Click={()=>setPopPupEliminar(true)}/>
+            </div>
           </div>
         </div>
-    </div>
+        {isOpen && <Popup><ContentPopupPedido F_Click_Cerrar={ActionPopup} orderInfo = {infoOrder}/></Popup>}
+      </>
+    }
+    </>
   )
 }
 /*
