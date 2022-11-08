@@ -1,14 +1,20 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { Error } from '../../Components/Buttons/Buttons'
 import LoginForm from '../../Components/LoginForm/LoginForm'
 import Popup from '../../Components/Popup/Popup'
-import { UserContext } from '../../context/userContext'
+import { usuarioContext } from '../../context/userContext'
 
 import './Login.css'
 
 const Login = () => {
-  const {dataForm, getLogin} = useContext(UserContext)
-  
+  const {dataForm, getLogin, Allow} = useContext(usuarioContext)
+  useEffect(()=>{
+
+    //setPermitir(Allow)
+    console.log(" LoginAllow " + Allow)
+    //console.log("Permitir " + Permitir)
+
+  },[Allow])
   return (
     <div className="pageLogin">
        <LoginForm send={getLogin} change={dataForm} />

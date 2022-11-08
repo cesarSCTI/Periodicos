@@ -1,21 +1,21 @@
 import React, { createContext, useState } from "react";
 
-export const UserContext = createContext([]);
+export const usuarioContext = createContext([]);
 
 
 const UserContextProvider = ({children}) => {
     const [data, setData] = useState([])
     const [User, setUser] = useState([])
-    const [Allow, setAllow] = useState(true)
+    const [Allow, setAllow] = useState(false)
     
     const userAuth = (User) => {
         if( User.status === 200 ){
-            setAllow(true)
-            console.log(Allow)
+            //console.log("vengo de context "+ Allow)
+           return setAllow(true)
         }
         else{    
-            setAllow(false)
-            console.log(Allow)
+            //console.log("vengo de context "+ Allow)
+           return setAllow(false)  
         }
     }
 
@@ -26,7 +26,7 @@ const UserContextProvider = ({children}) => {
            setAllow(false)
        })      
        setUser(dato)
-       //userAuth(dato)
+       userAuth(dato)
     }
 
     const dataForm = (e) =>{
@@ -34,11 +34,11 @@ const UserContextProvider = ({children}) => {
             ...data,
             [e.target.name]: e.target.value
         })
-        console.log(data)
+        //console.log(data)
     }
 
     return (
-        <UserContext.Provider value={{
+        <usuarioContext.Provider value={{
             Allow,
             User,
             dataForm, 
@@ -47,7 +47,7 @@ const UserContextProvider = ({children}) => {
             setAllow 
         }}>
             {children}
-        </UserContext.Provider>
+        </usuarioContext.Provider>
     )
 }
 
