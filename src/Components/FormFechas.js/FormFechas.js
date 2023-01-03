@@ -2,13 +2,13 @@ import React from 'react'
 import {Success} from '../Buttons/Buttons'
 import './FormFechas.css'
 
-const FormFechas = () => {
+const FormFechas = ({enviar, cambiar}) => {
   return (
-        <div className="formList">
-            <input type="date" className="input"/>
-            <input type="date" className="input"/>
+        <form className="formList" onSubmit={enviar} onChange={cambiar}>
+            <input type="date" className="input" name='date1'/>
+            <input type="date" className="input" name='date2'/>
             <Success Text="Guardar" />
-        </div>
+        </form>
        
   )
 }

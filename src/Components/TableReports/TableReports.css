@@ -1,3 +1,39 @@
 .topBorderLine{
     border-top: solid 1px #020202;
 }
+.inputProductreport{
+    text-align: center;
+    border: solid 1px #ececec;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 4px 4px 4px #ececec;
+}
+.inputProductreport:focus{
+    border: solid 1px #ececec;
+    background: var(--primario);
+    outline: none;
+    color:#fff;
+}
+.contentreport{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width:100%;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    gap: 20px;
+}
+.contentreporttitulos{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width:100%;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    gap: 20px;
+    background: var(--secundario);
+    color:#fff;
+    text-align: center;
+}
