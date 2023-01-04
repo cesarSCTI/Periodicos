@@ -37,3 +37,21 @@
     padding: 5px 25px;
     border-radius: 30px;
 }
+.status-generado{
+    text-align: center;
+    background:var(--success);
+    padding: 5px 25px;
+    border-radius: 30px;
+}
+.status-pagado{
+    text-align: center;
+    background:var(--opc);
+    padding: 5px 25px;
+    border-radius: 30px;
+}
+.status-cancelado{
+    text-align: center;
+    background:var(--error);
+    padding: 5px 25px;
+    border-radius: 30px;
+}

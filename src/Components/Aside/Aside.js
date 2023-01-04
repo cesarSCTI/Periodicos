@@ -21,6 +21,7 @@ const Aside = () => {
         <Link to="productos/"><NavPrincipal Text="Productos"><i className='bx bx-book-open' ></i></NavPrincipal></Link>
         <Link to="pedidos"><NavPrincipal Text="Pedidos"><i className='bx bx-cube-alt' ></i></NavPrincipal></Link>
         <Link to="reportes"><NavPrincipal Text="Reportes"><i className='bx bx-bar-chart' ></i></NavPrincipal></Link>
+        <Link to="ticket"><NavPrincipal Text="Ticket ejemplo"><i className='bx bx-bar-chart' ></i></NavPrincipal></Link>
       </div>
     </div>
   )

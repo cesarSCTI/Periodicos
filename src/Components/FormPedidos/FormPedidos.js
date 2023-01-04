@@ -46,7 +46,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                 </div>
             </form>
         </div>
-        {isOpen && <Popup> <ContentPopupPedido F_Click_Cerrar={ActionPopup}/> </Popup>}
+        {isOpen && <Popup> <ContentPopupPedido F_Click_Cerrar={ActionPopup} orderInfo={orderInfo}/> </Popup>}
     </>
   )
 }

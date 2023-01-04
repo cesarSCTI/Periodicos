@@ -17,12 +17,15 @@ import PeriodicosNuevo from '../Pages/Productos/PeriodicosNuevo';
 import ProductosList from '../Pages/Productos/ProductosList';
 import Reportes from '../Pages/Reportes/Reportes';
 import ErrorComponent from '../Components/ErrorComponent/ErrorComponent';
+import TicketExample from '../Pages/Ticket/TicketExample';
 
 const Routing = () => {
   const { Allow }  = useContext(usuarioContext)
 
   useEffect(()=>{
+
   },[Allow])
+
   return (
     <BrowserRouter>
         <div className='main'>
@@ -51,7 +54,9 @@ const Routing = () => {
                 <Route path='/cobranza' element={<Cobranza />}/>
                 {/*Cobranza */}
                 <Route path='/reportes' element={<Reportes />}/>
-                {/*Login */}
+                {/*Tickets */}
+                <Route path='/ticket' element={<TicketExample/>}/>
+                {/*Errores de url*/}
                 <Route path='/*' element={<ErrorComponent />}/>
               </Routes>
               </Principal>
