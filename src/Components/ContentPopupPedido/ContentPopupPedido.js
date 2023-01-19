@@ -1,23 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Error, Success } from '../Buttons/Buttons'
 import Header from '../Header/Header'
 import './ContentPopupPedido.css';
 import * as yup from "yup";
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
  
 const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
   console.log(orderInfo);
-
-  const Abono = 9-Number(orderInfo.Pago_Abono);
+  const navigate = useNavigate();
+  const [resta, setResta] = useState();
+  const Abonos = resta;
   
+  /*
   const [formData,setformData] = useState({ 
     "K_Cliente":Number(orderInfo.K_Cliente),
     "Pago_Abono":`${orderInfo.Pago_Abono}`,
-    "Abono":0,
-    "Adeudo_Final":0,
+    "Abono":`${orderInfo.Pago_Abono}`,
+    "Adeudo_Final":Abono,
     "K_Usuario_Pago":1
   })
+  */
+  const [formData,setformData] = useState({ 
+    "K_Cliente":orderInfo.K_Cliente,
+    "Pago_Abono":'',
+    "Abono":`${Abonos}`,
+    "Adeudo_Final":'',
+    "K_Usuario_Pago":1
+  })
+
+  useEffect(()=>{    
+    setResta(Number(orderInfo.Total)-Number(formData.Pago_Abono))
+    formData.Abono = formData.Pago_Abono
+    formData.Adeudo_Final = Number(orderInfo.Total)-Number(formData.Pago_Abono)
+  },[formData])
  
  
   let Schema = yup.object().shape({
@@ -39,15 +55,13 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
       })
       .then(function(response){
         console.log(response);
+        if(response.status == 200){
+          navigate("../pedidos",{replace:true});
+        }
       })
       .catch(function(error){
         console.log(error)
       })
-      .finally(
-        ()=>{
-          Navigate("../pedidos",{replace:true});
-        }
-      )
     }
   }
 
@@ -55,15 +69,28 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
     setformData({
       ...formData,
       [e.target.name]:e.target.value
+      
     })
-    console.log("handleChange "+formData)
+    console.log("handleChange "+formData+" - "+formData.Pago_Abono)
+    
+  }
+
+  const handleInputChange = (e)=>{
+    console.log("e "+e.target.value);
+    //formData.Adeudo_Final = e.target.value
+    setformData({
+      ...formData,
+      [e.target.name]:e.target.value
+      
+    })
+    console.log("handleInputChange "+formData+" - "+formData.Pago_Abono)
   }
   return (
     <>
         <Header Text="Pago Pedido" >
             <Error Text="Cerrar" F_Click={F_Click_Cerrar}/>
         </Header>
-        <form className='formPago' onSubmit={pagoPedido} onChange={handleChange}>
+        <form className='formPago' onSubmit={pagoPedido}>
         <div className='contentPago'>
           
             <div className='d-50'>
@@ -79,9 +106,9 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
             </div>
             <div className='d-50'>              
                 <p>Pago</p>
-                <input type="text" name='Pago_Abono' className='inputPago'/>
+                <input type="text" name='Pago_Abono' className='inputPago' onChange={handleInputChange} defaultValue={0}/>
                 <p>Adeudo final</p>
-                <input type="text" name='Adeudo_Final' className='inputTotal' defaultValue={orderInfo.Total} disabled/>
+                <input type="text" name='Adeudo_Final' className='inputTotal' defaultValue={resta} disabled/>
                 <Success Text="Pagar" />              
             </div>
           

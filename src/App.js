@@ -10,6 +10,7 @@ import Cobranza from './Pages/Cobranza/Cobranza';
 import InvDiario from './Pages/InventarioDiario/InvDiario';
 import Pedidos from './Pages/Pedidos/Pedidos';
 import PedidosInterior from './Pages/Pedidos/PedidosInterior';
+import PedidosNuevo from './Pages/Pedidos/PedidosNuevo';
 import Periodicos from './Pages/Productos/Periodicos';
 import PeriodicosNuevo from './Pages/Productos/PeriodicosNuevo';
 import ProductosList from './Pages/Productos/ProductosList';
@@ -36,6 +37,7 @@ function App() {
           {/*Pedidos*/}
           <Route path='/pedidos' element={<Pedidos />}/>
           <Route path='/pedidos/:id' element={<PedidosInterior />}/>
+          <Route path='/pedidos/nuevo' element={<PedidosNuevo/>}/>
           {/*Cobranza */}
           <Route path='/cobranza' element={<Cobranza />}/>
           {/*Cobranza */}

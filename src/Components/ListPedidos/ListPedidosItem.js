@@ -59,6 +59,21 @@ const ListPedidosItem = ({infoOrder}) => {
     })
   }
 
+  const login =(pedido) =>{
+    axios.get(`https://api-rest-sist-periodico.deversite.com/api/login/alan/12345`)
+    .then(function(response){
+      console.log(response);
+      /*
+      if(response.status == 200){
+        setPopPupCancelar(false)
+        navigate("../pedidos",{replace:true});
+      }*/
+    })
+    .catch(function(error){
+      console.log(error);
+    })
+  }
+
   const ActionPopup = (e) =>{
     e.preventDefault()
     if(isOpen){
@@ -132,6 +147,7 @@ const ListPedidosItem = ({infoOrder}) => {
                 infoOrder.Estatus == "GENERADO"
                 ?<SuccessPago F_Click={ActionPopup}/>
                 :<></>
+                //<Link to={`https://api-rest-sist-periodico.deversite.com/login/alan/12345`}><SuccessVer/></Link>
               }
               {
                 infoOrder.Estatus == "GENERADO" || infoOrder.Estatus == "PAGADO"
@@ -139,6 +155,7 @@ const ListPedidosItem = ({infoOrder}) => {
                 :<></>
               }
               <ErrorEliminar F_Click={()=>setPopPupEliminar(true)}/>
+              
             </div>
           </div>
         </div>
