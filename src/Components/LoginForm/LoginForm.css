@@ -1,0 +1,48 @@
+.coverForm{
+    height: 100vh;
+}
+.titleLoginContent{
+    background: var(--primario);
+    width: 40%;
+    padding: 20px 40px;
+}
+.titleLogin{
+    color:#fff;
+}
+.LoginForm{
+    display: flex;
+    width:40%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    flex-direction: column;
+    background-color:#ececec;
+    overflow: hidden;
+}
+.LoginForm label{
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+.contenInputs{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.UserFormInput{
+    background:#fff;
+    border:#ececec solid 1px;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px 15px;
+    height: 20px;
+    box-shadow:4px 4px 4px #ececec;
+    width: 90%;
+}
+.onlyRead{
+    background: #ececec;
+}
+.end{
+    display: flex;
+    justify-content: flex-end;
+}
