@@ -1,5 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Buscador from '../../Components/Buscador/Buscardor'
+import { Opc } from '../../Components/Buttons/Buttons'
 import Header from '../../Components/Header/Header'
 import ListPedidos from '../../Components/ListPedidos/ListPedidos'
 import ListPedidosItem from '../../Components/ListPedidos/ListPedidosItem'
@@ -12,7 +14,9 @@ const {Pedidos, handleBusqueda} = usePetitionPedidos()
 
 return (
     <>
-        <Header Text="Pedidos" />
+        <Header Text="Pedidos">
+          <Link to="nuevo"><Opc Text="Nuevo pedido"/></Link>
+        </Header>
         <Buscador Cambio={handleBusqueda}/>
         <ListPedidos />
         {

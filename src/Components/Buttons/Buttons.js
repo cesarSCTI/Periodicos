@@ -72,7 +72,11 @@ export const SuccessPago = ({F_Click}) => {
 export const SuccessVer = ({F_Click}) =>{
   return (
     <button className='btn actions opcBtn' onClick={F_Click}>
+<<<<<<< HEAD
       <i class="bx bx-detail icon-item"></i>
+=======
+      <i class="bx bx-search-alt icon-item"></i>
+>>>>>>> alan
   </button>
   )
 }
