@@ -93,3 +93,31 @@
 .InventarioBTN:hover{
     background: var(--cuarto);
 }
+/*Options items*/
+.error-item{
+    background: var(--error);
+    color:#fff;
+    border:solid 1px var(--error);
+    border-radius: 15px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+.error-item:hover{
+    background: #fff;
+    color:var(--error);
+}
+.icon-item{
+    /*margin-right: 20px;*/
+    font-size: 25px;
+}
+.success-item{
+    background: var(--success);
+    color:#000;
+    border: solid 1px var(--success);
+    border-radius: 15px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+.success-item:hover{
+    background: #fff;
+}

@@ -1,12 +1,19 @@
-import React, {useState} from 'react'
-import { Success } from '../Buttons/Buttons';
+import React, {useState,Component} from 'react'
+import { Success,Error } from '../Buttons/Buttons';
 import ContentPopupPedido from '../ContentPopupPedido/ContentPopupPedido';
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import Header from '../Header/Header';
+import Loader from '../Loader/Loader';
 import Popup from '../Popup/Popup';
 import PedidoProducts from './PedidoProducts';
 import './FormPedidos.css';
 
 const FormPedidos = ({PedidoData, orderInfo}) => {
     const [isOpen, setIsopen] = useState(false)
+    const[popPupCancelar,setPopPupCancelar] = useState(false)
+    const[popPupEliminar,setPopPupEliminar] = useState(false)
+    const navigate = useNavigate();
 
     const ActionPopup = (e) =>{
         e.preventDefault()
@@ -17,7 +24,72 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
         }
     }
 
+    var Usuario_Cancelo = {
+        'K_Usuario_Cancelo':1
+    }
+
+    const cancelarPedido = (pedido) =>{
+        axios.post(`https://api-rest-sist-periodico.deversite.com/cancelar_pedido/${pedido}`, new URLSearchParams(Usuario_Cancelo),{
+          headers:{
+            'Content-Type':'application/x-www-form-urlencoded'
+          }
+        })
+        .then(function(response){
+          console.log(response);
+          if(response.status == 200){
+            setPopPupCancelar(false)
+            navigate("../pedidos",{replace:true});
+          }
+        })
+        .catch(function(error){
+          console.log(error);
+        })
+        /*
+        .finally(
+          ()=>{
+            navigate("../pedidos",{replace:true});
+          }
+        )
+        */
+      }
+
+      const eliminarPedido =(pedido) =>{
+        axios.post(`https://api-rest-sist-periodico.deversite.com/eliminar_pedido/${pedido}`)
+        .then(function(response){
+          console.log(response);
+          if(response.status == 200){
+            setPopPupCancelar(false)
+            navigate("../pedidos",{replace:true});
+          }
+        })
+        .catch(function(error){
+          console.log(error);
+        })
+      }
+
   return (
+    popPupCancelar
+      ?<Popup>
+        <Header Text="¿Estas seguro de cancelar este pedido?"/>
+        <Loader/>
+        <div className = "d-100 comboBTNS">
+          <Error Text="No" F_Click={()=>setPopPupCancelar(false)}/>
+          <Success Text="Si" F_Click={()=>cancelarPedido(orderInfo.K_Pedido)}/>
+        </div>
+      </Popup>
+      :
+      popPupEliminar
+      ?
+      <Popup>
+        <Header Text="¿Estas seguro de eliminar este pedido?"/>
+        <Loader/>
+        <div className = "d-100 comboBTNS">
+          <Error Text="No" F_Click={()=>setPopPupEliminar(false)}/>
+          <Success Text="Si" F_Click={()=>eliminarPedido(orderInfo.K_Pedido)}/>
+        </div>
+
+      </Popup>
+      :
       <>
         <div className='container'>
             <form className='formPedidos'>
@@ -34,19 +106,55 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                 <div className='Table'>
                     <div className='d-60'>
                         <PedidoProducts listProducts={PedidoData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>
+                        <div className='Table'>
+                            <label className='label'>Observaciones</label>
+                            <input type="text" className='input' defaultValue={orderInfo.Observaciones}/>
+                        </div>
                     </div>
                     <div className='d-40 justifyRight'>
+                        <label className='label'>Adeudo</label>
+                        <input type="text" className='inputTotal' defaultValue={orderInfo.Adeudo}/>
+                        <label className='label'>Subtotal a pagar del pedido</label>
+                        <input type="text" className='inputTotal' defaultValue={orderInfo.Total_Pedido}/>
                         <label className='label'>Total a Pagar</label>
                         <input type="text" className='inputTotal' defaultValue={orderInfo.Total} />
+                        {
+                            orderInfo.Estatus == "PAGADO"
+                            ?<>
+                            <label className='label'>Pago</label>
+                            <input type="text" className='inputTotal' defaultValue={orderInfo.Pago_Abono} />
+                            <label className='label'>Adeudo Final</label>
+                            <input type="text" className='inputTotal' defaultValue={orderInfo.Adeudo_Final} />
+                            </>
+                            :<></>
+                        }
                     </div>
                 </div>
-                <div className='Table'>
-                    <Success Text="Generar Pedido"/>
-                    <Success Text="Generar y pagar" F_Click={ActionPopup} />
-                </div>
+                
             </form>
         </div>
-        {isOpen && <Popup> <ContentPopupPedido F_Click_Cerrar={ActionPopup}/> </Popup>}
+        <div className='container'>
+            <div className='Table'>
+            {
+                orderInfo.Estatus == "PAGADO"
+                ?<div className='Table'> 
+                <Success Text="Ticket"/>
+                <Error Text="Cancelar" F_Click={()=>setPopPupCancelar(true)} />
+                </div>
+                :orderInfo.Estatus == "GENERADO"
+                ?<div className='Table'> 
+                <Success Text="Generar Pedido"/>
+                <Success Text="Generar y Pagar" F_Click={ActionPopup} />
+                </div>
+                :orderInfo.Estatus == "CANCELADO"
+                ?<div className='Table'> 
+                <Error Text="Eliminar" F_Click={()=>setPopPupEliminar(true)} />
+                </div>
+                :<></>
+            }
+            </div>
+        </div>
+        {isOpen && <Popup> <ContentPopupPedido F_Click_Cerrar={ActionPopup} orderInfo={orderInfo}/> </Popup>}
     </>
   )
 }

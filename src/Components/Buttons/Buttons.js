@@ -46,3 +46,40 @@ export const InventarioBTN = ({Text, children, F_Click})=>{
     </div>
   )
 }
+//  icon list 
+export const ErrorCancel = ({F_Click}) =>{
+  return (
+    <button className='btn actions error-item' onClick={F_Click}>
+      <i class="bx bx-x-circle icon-item"></i>
+    </button>
+  )
+}
+export const ErrorEliminar = ({F_Click}) =>{
+  return (
+    <button className='btn actions error-item' onClick={F_Click}>
+      <i class="bx bx-trash icon-item"></i>
+    </button>
+  )
+}
+export const SuccessPago = ({F_Click}) => {
+  return (
+    <button className='btn actions success-item' onClick={F_Click}>
+        <i class="bx bx-dollar-circle icon-item"></i>
+    </button>
+  )
+}
+
+export const SuccessVer = ({F_Click}) =>{
+  return (
+    <button className='btn actions opcBtn' onClick={F_Click}>
+      <i class="bx bx-search-alt icon-item"></i>
+  </button>
+  )
+}
+export const SuccessPagoInfo = ({F_Click}) => {
+  return (
+    <button className='btn actions success' onClick={F_Click}>
+        {Text}
+    </button>
+  )
+}
