@@ -133,8 +133,6 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                 
             </form>
         </div>
-<<<<<<< HEAD
-=======
         <div className='container'>
             <div className='Table'>
             {
@@ -156,7 +154,6 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
             }
             </div>
         </div>
->>>>>>> alan
         {isOpen && <Popup> <ContentPopupPedido F_Click_Cerrar={ActionPopup} orderInfo={orderInfo}/> </Popup>}
     </>
   )
