@@ -1,5 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Buscador from '../../Components/Buscador/Buscardor'
+import { Success } from '../../Components/Buttons/Buttons'
 import Header from '../../Components/Header/Header'
 import ListClientes from '../../Components/ListClientes/ListClientes'
 import ListClientesItem from '../../Components/ListClientes/ListClientesItem'
@@ -12,7 +14,9 @@ const ClientesLista = () => {
 
   return (
     <>
-    <Header Text="Clientes" />
+    <Header Text="Clientes" >
+      <Link to="nuevo"><Success Text="Cliente Nuevo"></Success></Link>
+    </Header>
       <Buscador Cambio={handleBusqueda}/>
       <ListClientes/>
       {

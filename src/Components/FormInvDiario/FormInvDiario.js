@@ -2,38 +2,19 @@ import React from 'react'
 import { Success } from '../Buttons/Buttons'
 import './FormInvDiario.css'
 
-const FormInvDiario = () => {
+const FormInvDiario = ({data, cambio, enviar}) => {
   return (
     <div className='container'>
-         <form className='formInv'>
-         <div className='spaceProduct'>
-             <p>Informador</p>
-             <input type="text" />
-         </div>
-         <div className='spaceProduct'>
-             <p>Occidental</p>
-             <input type="text" />
-         </div>
-         <div className='spaceProduct'>
-             <p>Milenio</p>
-             <input type="text" />
-         </div>
-         <div className='spaceProduct'>
-             <p>Metro</p>
-             <input type="text" />
-         </div>
-         <div className='spaceProduct'>
-             <p>Mural</p>
-             <input type="text" />
-         </div>
-         <div className='spaceProduct'>
-             <p>NTR</p>
-             <input type="text" />
-         </div>
-         <div className='spaceProduct'>
-             <p>Hola</p>
-             <input type="text" />
-         </div>
+         <form className='formInv' onChange={cambio} onSubmit={enviar}>
+         {
+            data.map((ele) => 
+            <div className='spaceProduct' >
+                <input type="text" name={ele.Nombre} defaultValue={ele.Nombre} disabled />
+                <input type="number" name={ele.K_Producto} defaultValue={0}/>
+            </div>
+            )
+         }
+         
              <Success Text="Guardar" />
          </form>
     </div>

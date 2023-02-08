@@ -6,7 +6,7 @@ import Header from '../../Components/Header/Header'
 import PedidoDefault from '../../Components/PedidoDefault/PedidoDefault'
 
 const ClientesNuevo = () => {
-    const parametro = useParams();
+    /*const parametro = useParams();
     const [url, setUrl] = useState(undefined);
 
     const validatePage = () => {
@@ -15,7 +15,7 @@ const ClientesNuevo = () => {
 
     useEffect(() => {
         console.log(parametro)
-    })
+    })*/
 
     return (
         <>
