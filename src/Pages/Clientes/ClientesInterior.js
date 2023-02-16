@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import { Error, Success } from '../../Components/Buttons/Buttons'
 import FormUser from '../../Components/FormUser/FormUser'
@@ -9,8 +9,11 @@ import { useCRUDCliente } from './useCRUDCliente'
 import Popup from '../../Components/Popup/Popup'
 
 const ClientesInterior = () => {
-  const {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, openPOPUP, sureDelete} = useCRUDCliente()
+  const {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, openPOPUP, sureDelete, requestCliente} = useCRUDCliente()
 
+useEffect(()=>{
+  requestCliente()
+},[])
   return (
     <>
       {

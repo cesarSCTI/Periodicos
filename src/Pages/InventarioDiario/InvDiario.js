@@ -45,9 +45,9 @@ const InvDiario = () => {
     const InventarioCreate = (e) => {
         e.preventDefault()
         console.log(JSON.stringify(inventario))
-        axios.post("https://api-rest-sist-periodico.deversite.com/api/inventario_dia", new URLSearchParams(JSON.stringify(inventario)), {
+        axios.post("https://api-rest-sist-periodico.deversite.com/inventario_dia", JSON.stringify(inventario), {
             headers: {
-                'content-type': 'text/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
             .then(function (response) {

@@ -5,7 +5,14 @@ import * as yup from "yup";
 
 export const useCRUDCliente = () =>{
     const parameter = useParams()
-    const [Cliente, setCliente] = useState()
+    const [Cliente, setCliente] = useState({
+        "K_Cliente":0,
+        "Nombre":"",
+        "Apellidos":"",
+        "Telefono":"",
+        "Direccion":"",
+        "Adeudo":0,  
+    })
     const [isLoading, setIsloading] = useState(true)
     const [sureDelete, setSureDelete] = useState(false)
     const navigate = useNavigate()
@@ -87,8 +94,9 @@ export const useCRUDCliente = () =>{
 
 
 
-    useEffect(()=>{
+   /* useEffect(()=>{
         requestCliente()
     },[])
-    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente,sureDelete, openPOPUP}
+*/
+    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, requestCliente, sureDelete, openPOPUP}
 }
