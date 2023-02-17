@@ -14,6 +14,7 @@ import Pedidos from '../Pages/Pedidos/Pedidos';
 import PedidosInterior from '../Pages/Pedidos/PedidosInterior';
 import Periodicos from '../Pages/Productos/Periodicos';
 import PeriodicosNuevo from '../Pages/Productos/PeriodicosNuevo';
+import PedidosNuevo from '../Pages/Pedidos/PedidosNuevo';
 import ProductosList from '../Pages/Productos/ProductosList';
 import Reportes from '../Pages/Reportes/Reportes';
 import ErrorComponent from '../Components/ErrorComponent/ErrorComponent';
@@ -50,6 +51,7 @@ const Routing = () => {
                 {/*Pedidos*/}
                 <Route path='/pedidos' element={<Pedidos />}/>
                 <Route path='/pedidos/:id' element={<PedidosInterior />}/>
+                <Route path='/pedidos/nuevo' element={<PedidosNuevo/>}/>
                 {/*Cobranza */}
                 <Route path='/cobranza' element={<Cobranza />}/>
                 {/*Cobranza */}

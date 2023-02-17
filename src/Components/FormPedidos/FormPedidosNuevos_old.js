@@ -16,7 +16,6 @@ import * as yup from "yup";
 import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom'
 //import { json } from "stream/consumers";
-import { ErrorCancel, ErrorEliminar, Opc, SuccessPago, SuccessVer } from '../Buttons/Buttons'
 
 const FormPedidosNuevos = ({orderInfo,placeholder}) => {
 
@@ -31,16 +30,9 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     //const[K_Cliente_F,setClientF] = useState([])
     const[vTotal_Pedido,setTotal_Pedido] = useState(0)
     const[vAdeudo, setAdeudo] = useState(0)
-    //
-    
 
     const navigate = useNavigate();
 
-    var SumaTotalF = 0;
-    var TotalF = 0;
-    var TotalPedido = 0;
-
-    const [order, setOrder] = useState(orderInfo)
     const [formData,setformData] = useState({
         "K_Pedido":Number(orderInfo.K_Pedido),
         "K_Cliente":Number(orderInfo.K_Cliente),
@@ -53,9 +45,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         "K_Usuario_Captura":Number(orderInfo.K_Usuario_Captura),
         "Observaciones":`${orderInfo.Observaciones}`
     })
-    
-    
-    
+
     const weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     //const numweekday = ["Monday"=>1,"Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     //const[popPupCancelar,setPopPupCancelar] = useState(false)
@@ -71,20 +61,17 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         setTablaClient(data)
     }
     
-    const ActionPopup = (e,K_Cliente,Adeudo, D_Cliente) =>{
+    const ActionPopup = (e,K_Cliente,Adeudo) =>{
         e.preventDefault()
-        console.log("ActionPopup "+K_Cliente+" "+D_Cliente)
+        console.log("ActionPopup "+K_Cliente)
         if(isOpen){
             setIsopen(false)
         }else{
             setIsopen(true)
             requestPedidoDefaultCD(K_Cliente,Adeudo)
             formData.K_Cliente = K_Cliente
-            formData.Nombre = D_Cliente
-            setBusqueda(D_Cliente)
             setK_Cliente(K_Cliente)
             console.log("K_Cliente_F "+formData.K_Cliente)
-            console.log("Total "+formData.Total_Pedido)
             //setClientF(K_Cliente)
             const Total_Pedido = PedidoData.map((detalle) => parseFloat(detalle.Total))
                 .reduce((previous, current) => {
@@ -95,20 +82,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
             setTotal_Pedido(Total_Pedido) 
             setAdeudo(Adeudo) 
             formData.Adeudo = Adeudo
-            //formData.Total_Pedido = Total_Pedido
-            //order.Total_Pedido = formData.Total_Pedido
-            order.Adeudo = Adeudo
-            PedidoData.map(product => {
-                TotalPedido += Number(product.Total)
-              })
-            console.log("Total inicial "+TotalPedido)
-            order.Total_Pedido = TotalPedido
-            order.Total = TotalPedido + Number(Adeudo)
-            formData.Total_Pedido = TotalPedido
-            formData.Total = TotalPedido + Number(Adeudo)
-            setOrder(order)
-            console.log(order)
-            console.log(formData)
+            formData.Total_Pedido = Total_Pedido
         }
     }
     //  Pedido Default
@@ -273,11 +247,11 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         })
         .then(function(response){
             console.log('response '+JSON.stringify(response));
-            /*
+            
             if(response.data.status == 200){
                 navigate("../pedidos",{replace:true});
             }
-            */
+            
         })
         .catch(function(error){
             console.log(error)
@@ -291,63 +265,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         })
         console.log("handleChange "+formData)
       }
-    
-      const handleOnChange = (e, a) =>{
-        
-        let arr = e.target.name.split('_');
-        console.log("cant_"+arr[1]+" "+e.target.value);
-        console.log("cant 2 "+e.target.name);
-        SumaTotalF = e.target.value
-        console.log("SumaTotalF "+SumaTotalF)
-        //setSumaTotal(Number(SumaTotalF)+10)
-        //console.log(this.refs.Precio_17)
-        //console.log(this.state.Precio_17)
-        //console.log(products)
-        //console.log(order)
-        const newProduct = PedidoData.map(product => {
-          console.log("w")
-          console.log(product.K_Producto)
-          
-          if(product.K_Producto==arr[1]){
-            console.log("q")
-            product.Total = `${(Number(SumaTotalF)*Number(product.PrecioUnitario))}`
-            product.Cantidad = `${Number(SumaTotalF)}`
-            }
-          TotalPedido+= Number(product.Total)
-          return product;
-          console.log("PREcio "+ product.PrecioUnitario)
-        })
-        console.log(TotalPedido)
-        console.log(newProduct)
-        order.Total_Pedido = TotalPedido
-        order.Total = TotalPedido + Number(order.Adeudo)
-        formData.Total_Pedido = TotalPedido
-        formData.Total= TotalPedido + Number(order.Adeudo)
-        //setProducts(newProduct)
-        /*
-        const PedidoData2 = orderInfo.forEach(function(currentValue, index, arr){
-          console.log(currentValue)
-          currentValue.Total = TotalF
-          console.log(arr)
-        })
-        */
 
-        
-    /*    order.Total = TotalF
-        console.log(order)
-    */ 
-        setOrder(order)
-        console.log(order)
-        console.log(formData)
-      }
-      
-      const clearInput = () => {
-        setClient([])
-        setBusqueda("")
-        //setFilteredData([]);
-        //setWordEntered("");
-      };
-      
   return (
       <><form className='formPedidos' onSubmit={crearPedido} onChange={handleChange}>
         <div className='container'>
@@ -355,31 +273,28 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                 <div className='inputsName'>
                     <div className='pedidoFicha'>
                         <label className='label'>Ficha Cliente</label>
-                        <input type="text" name="K_Nombre" className='input' value={vK_Cliente} disabled/>
+                        <input type="text" name="K_Nombre" className='input' defaultValue={vK_Cliente}/>
                     </div>
-                    {/*
                     <div className='pedidoNombre'>
                         <label className='label'>Nombre</label>
                         <input type="text" name="Nombre" className='input' defaultValue={orderInfo.D_Cliente}/>
                     </div>
-                    */
-                    }
-                    <div className="pedidoNombre">
-                        {/*<div className="searchInputs">*/}
-                            <label className='label'>Nombre</label>
+
+                    <div className="search">
+                        <div className="searchInputs">
                             <input
-                            type="text" name="Nombre" className="input"
+                            type="text" name="Nombre_Select"
                             placeholder={placeholder}
                             value={busqueda}
                             onChange={handleFilter}
                             />
-                        {/*</div>*/}
+                        </div>
                         {
                             Client.length !== 0 && (
                             <div className="dataResult">
                                 {Client.slice(0, 15).map((value, key) => {
                                 return (
-                                    <a className="dataItem" onClick={event=>ActionPopup(event,value.K_Cliente,value.Adeudo,value.Nombre+' '+value.Apellidos)} >
+                                    <a className="dataItem" onClick={event=>ActionPopup(event,value.K_Cliente,value.Adeudo)} >
                                     <p>{value.Nombre+' '+value.Apellidos} </p>
                                     </a>
                                 );
@@ -391,46 +306,9 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                 </div>
                 <div className='Table'>
                     <div className='d-60'>
-                    
-                        
-                        <div className='container'>
-                            <div className='titulos'>
-                                <div className='d-20'>Nombre</div>
-                                <div className='d-20'>Pedido</div>
-                                <div className='d-20'>Devoluciones</div>
-                                <div className='d-20'>Precio</div>
-                                <div className='d-20'>Total</div>
-                            </div>
-
-                            {
-                            isOpen 
-                            &&
-                            <div>
-                            {
-                                /*<PedidoProductsNuevos listProducts={PedidoData} Orders = {formData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>*/
-                                PedidoData.map((ele) =>
-                                <div className='contentProducts' key={ele.K_Producto}>
-                                    <div className='d-20'>{ele.Nombre_Producto}</div>
-                                    <div className='d-20'>
-                                    <input type="text" name={"Cant_"+ele.K_Producto} className='inputProduct' defaultValue={ele.Cantidad} onChange={(name, value) => handleOnChange(name, value)}/>
-                                    </div>
-                                    <div className='d-20'>
-                                    <input type="text" className='inputProduct' defaultValue={ele.Devoluciones} />
-                                    </div>
-                                    <div className='d-20'>
-                                    <input type="text" refs={"Precio_"+ele.K_Producto} name={"Precio_"+ele.K_Producto} className='inputProduct' defaultValue={ele.PrecioUnitario} disabled/>
-                                    </div>
-                                    <div className='d-20'>
-                                    <input type="text" name={"Total_"+ele.K_Producto} className='inputProduct' value={ele.Total} disabled/>
-                                    </div>
-                                </div>
-                                
-                                )
-                            }
-                            </div>
-                            }
-                        </div>
-                    
+                    {
+                        isOpen &&<PedidoProductsNuevos listProducts={PedidoData} Orders = {formData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>
+                    }
                         <div className='Table'>
                             <label className='label'>Observaciones</label>
                             <input type="text" className='input' defaultValue={orderInfo.Observaciones}/>
@@ -438,9 +316,9 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                     </div>
                     <div className='d-40 justifyRight'>
                         <label className='label'>Adeudo</label>
-                        <input type="text" name="Adeudo" className='inputTotal' value={orderInfo.Adeudo}/>
+                        <input type="text" name="Adeudo" className='inputTotal' defaultValue={vAdeudo}/>
                         <label className='label'>Subtotal a pagar del pedido</label>
-                        <input type="text" name="Total_Pedido" className='inputTotal' value={orderInfo.Total_Pedido}/>
+                        <input type="text" name="Total_Pedido" className='inputTotal' defaultValue={vTotal_Pedido}/>
                         <label className='label'>Total a Pagar</label>
                         <input type="text" name="Total" className='inputTotal' value={orderInfo.Total} />
                     </div>
