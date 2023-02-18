@@ -8,11 +8,16 @@ import Loader from '../Loader/Loader';
 import Popup from '../Popup/Popup';
 import PedidoProducts from './PedidoProducts';
 import './FormPedidos.css';
+import { object } from 'yup';
 
 const FormPedidos = ({PedidoData, orderInfo}) => {
     const [isOpen, setIsopen] = useState(false)
     const[popPupCancelar,setPopPupCancelar] = useState(false)
     const[popPupEliminar,setPopPupEliminar] = useState(false)
+    const[popPupGuardar,setPopPupGuardar] = useState(false)
+    //
+    const [order,setOrder] = useState(orderInfo)
+    const [products, setProducts] = useState(PedidoData)
     const navigate = useNavigate();
 
     const ActionPopup = (e) =>{
@@ -51,21 +56,117 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
           }
         )
         */
-      }
+    }
 
-      const eliminarPedido =(pedido) =>{
-        axios.post(`https://api-rest-sist-periodico.deversite.com/eliminar_pedido/${pedido}`)
-        .then(function(response){
-          console.log(response);
-          if(response.status == 200){
-            setPopPupCancelar(false)
-            navigate("../pedidos",{replace:true});
-          }
-        })
-        .catch(function(error){
-          console.log(error);
-        })
+    const eliminarPedido =(pedido) =>{
+      axios.post(`https://api-rest-sist-periodico.deversite.com/eliminar_pedido/${pedido}`)
+      .then(function(response){
+        console.log(response);
+        if(response.status == 200){
+          setPopPupCancelar(false)
+          navigate("../pedidos",{replace:true});
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+      })
+    }
+    //  Calculo cantidad
+    const handleOnChange = (e, a) =>{
+      var Cantidad = 0;
+      var TotalPedido = 0;
+      let arr = e.target.name.split('_');
+      const K_Producto = arr[1];
+      Cantidad = e.target.value
+      console.log("Cantidad: "+Cantidad)
+      const newProduct = PedidoData.map(product =>{
+        if(product.K_Producto==K_Producto){
+            product.Total = `${(Number(Cantidad)*Number(product.PrecioUnitario))}`
+            product.Cantidad = `${Number(Cantidad)}`
+        }
+        TotalPedido += Number(product.Total)
+        return product
+      })
+      orderInfo.Total_Pedido = TotalPedido
+      orderInfo.Total = TotalPedido + Number(orderInfo.Adeudo)
+      console.log(PedidoData)
+      console.log(products)
+      setProducts(newProduct)
+      setOrder(orderInfo)
+    }
+
+    const guardarPedido = (pedido) =>{
+      console.log(pedido)
+      console.log('Det')
+      
+      var updatePedido = 
+        {
+          "K_Pedido":pedido.K_Pedido,
+          "Total_Pedido":pedido.Total_Pedido,
+          "Adeudo":pedido.Adeudo,
+          "Total": pedido.Total,
+          "Observaciones":pedido.Observaciones     
+        }
+      axios.post('https://api-rest-sist-periodico.deversite.com/pedido',new URLSearchParams(updatePedido),{
+        headers:{
+          'Content-Type':'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(responseJson){
+        console.log(responseJson)
+        if(responseJson.status == 200){
+          updatePedidoDet(PedidoData)
+        }
+      })
+      .catch(function(error){
+        console.log(error)
+      })
+    }
+
+    const updatePedidoDet = (PedidoDet) => {
+      /*
+      object{
+            //"Nombre_Producto": "nuevo",
+            //"K_Pedido_Detalle": "109",
+            "K_Pedido": "66",
+            "K_Producto": "20",
+            "Cantidad": "1",
+            "PrecioUnitario": "6.00",
+            "Devoluciones": "0",
+            "Total": "6"
       }
+      correcto
+      {
+        "K_Pedido": "3",
+        "K_Producto": 1,
+        "Cantidad": "8",
+        "PrecioUnitario": "11.00",
+        "Devoluciones": "2",
+        "Total": "66.00"
+      }
+      */
+      PedidoDet.forEach(function(currentValue, index, arr){
+        delete currentValue.Nombre_Producto
+        delete currentValue.K_Pedido_Detalle
+      })
+
+      console.log(PedidoDet)
+
+      axios.post('https://api-rest-sist-periodico.deversite.com/actualiza_pedido_detalle', PedidoDet,{
+        headers:{
+          'Content-Type':'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function(response){
+        console.log('response '+JSON.stringify(response));
+        if(response.data.status == 200){
+          navigate("../pedidos",{replace:true});
+        }
+      })
+      .catch(function(error){
+        console.log(error)
+      }) 
+    }
 
   return (
     popPupCancelar
@@ -90,22 +191,63 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
 
       </Popup>
       :
+      popPupGuardar
+      ?
+      <Popup>
+        <Header Text="¿Estas seguro de guardar los cambios?"/>
+        <Loader/>
+        <div className='d-100 comboBTNS'>
+          <Error Text="No" F_Click={()=>setPopPupGuardar(false)}/>
+          <Success Text="Si" F_Click={()=>guardarPedido(orderInfo)}/>
+        </div>
+      </Popup>
+      :
       <>
         <div className='container'>
             <form className='formPedidos'>
                 <div className='inputsName'>
                     <div className='pedidoFicha'>
                         <label className='label'>Ficha Cliente</label>
-                        <input type="text" className='input' defaultValue={orderInfo.K_Cliente}/>
+                        <input type="text" className='input' defaultValue={orderInfo.K_Cliente} disabled/>
                     </div>
                     <div className='pedidoNombre'>
                         <label className='label'>Nombre</label>
-                        <input type="text" className='input' defaultValue={orderInfo.D_Cliente}/>
+                        <input type="text" className='input' defaultValue={orderInfo.D_Cliente} disabled/>
                     </div>
                 </div>
                 <div className='Table'>
                     <div className='d-60'>
-                        <PedidoProducts listProducts={PedidoData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>
+                        {/*<PedidoProducts listProducts={PedidoData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>*/}
+                        <div className='container'>
+                            <div className='titulos'>
+                                <div className='d-20'>Nombre</div>
+                                <div className='d-20'>Pedido</div>
+                                <div className='d-20'>Devoluciones</div>
+                                <div className='d-20'>Precio</div>
+                                <div className='d-20'>Total</div>
+                            </div>
+                            {
+                                /*<PedidoProductsNuevos listProducts={PedidoData} Orders = {formData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>*/
+                                PedidoData.map((ele) =>
+                                <div className='contentProducts' key={ele.K_Producto}>
+                                    <div className='d-20'>{ele.Nombre_Producto}</div>
+                                    <div className='d-20'>
+                                    <input type="text" name={"Cant_"+ele.K_Producto} className='inputProduct' defaultValue={ele.Cantidad} onChange={(name, value) => handleOnChange(name, value)} disabled = {orderInfo.Estatus == "PAGADO" ? 'disabled' : ''}/>
+                                    </div>
+                                    <div className='d-20'>
+                                    <input type="text" className='inputProduct' defaultValue={ele.Devoluciones} disabled = {orderInfo.Estatus == "PAGADO" ? "disabled" : ""}/>
+                                    </div>
+                                    <div className='d-20'>
+                                    <input type="text" refs={"Precio_"+ele.K_Producto} name={"Precio_"+ele.K_Producto} className='inputProduct' defaultValue={ele.PrecioUnitario} disabled/>
+                                    </div>
+                                    <div className='d-20'>
+                                    <input type="text" name={"Total_"+ele.K_Producto} className='inputProduct' value={ele.Total} disabled/>
+                                    </div>
+                                </div>
+                                
+                                )
+                            }
+                        </div>
                         <div className='Table'>
                             <label className='label'>Observaciones</label>
                             <input type="text" className='input' defaultValue={orderInfo.Observaciones}/>
@@ -113,11 +255,11 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                     </div>
                     <div className='d-40 justifyRight'>
                         <label className='label'>Adeudo</label>
-                        <input type="text" className='inputTotal' defaultValue={orderInfo.Adeudo}/>
+                        <input type="text" className='inputTotal' value={orderInfo.Adeudo}/>
                         <label className='label'>Subtotal a pagar del pedido</label>
-                        <input type="text" className='inputTotal' defaultValue={orderInfo.Total_Pedido}/>
+                        <input type="text" className='inputTotal' value={orderInfo.Total_Pedido}/>
                         <label className='label'>Total a Pagar</label>
-                        <input type="text" className='inputTotal' defaultValue={orderInfo.Total} />
+                        <input type="text" className='inputTotal' value={orderInfo.Total} />
                         {
                             orderInfo.Estatus == "PAGADO"
                             ?<>
@@ -143,8 +285,8 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                 </div>
                 :orderInfo.Estatus == "GENERADO"
                 ?<div className='Table'> 
-                <Success Text="Generar Pedido"/>
-                <Success Text="Generar y Pagar" F_Click={ActionPopup} />
+                <Success Text="-Guardar" F_Click={()=>setPopPupGuardar(true)}/>
+                <Success Text="Pagar" F_Click={ActionPopup} />
                 </div>
                 :orderInfo.Estatus == "CANCELADO"
                 ?<div className='Table'> 
