@@ -31,6 +31,8 @@ const ClientesNuevo = () => {
                     <Link to="/clientes"><Error Text="Regresar" /></Link>
                     </Header>
                     <FormUser InfoUser={Cliente} Envio={ClienteUpdate} Cambio={handleChange}/>
+                    {/*<Header Text="Pedido por defecto"/>
+                    <PedidoDefault />*/}
                 </>
             }
             

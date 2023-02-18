@@ -14,7 +14,6 @@ const FormInvDiario = ({data, cambio, enviar}) => {
             </div>
             )
          }
-         
              <Success Text="Guardar" />
          </form>
     </div>
