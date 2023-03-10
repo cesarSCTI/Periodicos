@@ -1,13 +1,13 @@
 //import React, {useState,Component} from 'react'
 import { useState,useEffect } from "react";
 //import React, {useState} from 'react'
-import { Success } from '../Buttons/Buttons';
+import { Success,Error } from '../Buttons/Buttons';
 //import ContentPopupPedido from '../ContentPopupPedido/ContentPopupPedido';
 //import { Link, useNavigate } from 'react-router-dom'
 //import axios from 'axios';
-//import Header from '../Header/Header';
-//import Loader from '../Loader/Loader';
-//import Popup from '../Popup/Popup';
+import Header from '../Header/Header';
+import Loader from '../Loader/Loader';
+import Popup from '../Popup/Popup';
 //import PedidoProducts from './PedidoProducts';
 //import { URLSearchParams } from 'url'
 import PedidoProductsNuevos from "./PedidoProductsNuevos";
@@ -32,8 +32,10 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     const[vTotal_Pedido,setTotal_Pedido] = useState(0)
     const[vAdeudo, setAdeudo] = useState(0)
     //
-    
+    const[disabled, setDisabled] = useState(true)
 
+    const[popPupMensajeProductos,setPopPupMensajeProductos] = useState(false);
+    
     const navigate = useNavigate();
 
     var SumaTotalF = 0;
@@ -53,8 +55,6 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         "K_Usuario_Captura":Number(orderInfo.K_Usuario_Captura),
         "Observaciones":`${orderInfo.Observaciones}`
     })
-    
-    
     
     const weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
     //const numweekday = ["Monday"=>1,"Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
@@ -78,7 +78,16 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
             setIsopen(false)
         }else{
             setIsopen(true)
+            setDisabled(false)
             requestPedidoDefaultCD(K_Cliente,Adeudo)
+            console.log('test')
+            console.log(PedidoData)
+            /*
+            if(PedidoData){
+                setPopPupMensajeProductos(true)  
+                return false             
+            }
+            */
             formData.K_Cliente = K_Cliente
             formData.Nombre = D_Cliente
             setBusqueda(D_Cliente)
@@ -102,6 +111,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                 TotalPedido += Number(product.Total)
               })
             console.log("Total inicial "+TotalPedido)
+            console.log("Total inicial 2 "+vTotal_Pedido)
             order.Total_Pedido = TotalPedido
             order.Total = TotalPedido + Number(Adeudo)
             formData.Total_Pedido = TotalPedido
@@ -112,7 +122,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         }
     }
     //  Pedido Default
-    const requestPedidoDefaultCD = async (K_Cliente,Adeudo)=>{
+    const  requestPedidoDefaultCD = async (K_Cliente,Adeudo)=>{
         //const date = new Date("December 5, 2022 01:15:00");
         const date = new Date();
         var NumDay = 1;//date.getDay();
@@ -123,18 +133,25 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         console.log(NumDay);
         const response = await fetch(`https://api-rest-sist-periodico.deversite.com/pedido_detalle_default_cd/${K_Cliente}/${NumDay}`)
         const data = await response.json().finally()
-        console.log(response);
+        console.log('function requestPedidoDefaultCD')
+        console.log(data);
         setPedidosDefaultN(data);
+        console.log('next')
+        console.log(PedidoData)
+        ///return data
         //
-        /*
+        
         const Total_Pedido = data.map((detalle) => parseFloat(detalle.Total))
             .reduce((previous, current) => {
                 return previous + current;
             }, 0);
-        console.log("Total_Pedido: "+Total_Pedido)
+        console.log("requestPedidoDefaultCD Total_Pedido: "+Total_Pedido)
+        formData.Total_Pedido = Total_Pedido
+        order.Total_Pedido = Total_Pedido
+        order.Total = Number(Total_Pedido) + Number(Adeudo)
         setTotal_Pedido(Total_Pedido) 
-        setAdeudo(Adeudo) 
-        */
+        //setAdeudo(Adeudo) 
+        
     }
     
     //   Buscador Cliente
@@ -145,10 +162,12 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         //filtrar(e.target.value)
         console.log("data "+searchWord);
         if(searchWord === ""){
-        setBusqueda([])
+            //setBusqueda([])
+            formData.K_Cliente = 0
+            setPedidosDefaultN({})
         }else{
-        setBusqueda(searchWord)
-        filtrar(searchWord)
+            setBusqueda(searchWord)
+            filtrar(searchWord)
         }
     }
   
@@ -162,8 +181,10 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
             });
             console.log(resultadosBusqueda)
             setClient(resultadosBusqueda);
+            setDisabled(true)
         }else{
-            setClient([])        
+            setClient([])    
+            setPedidosDefaultN({})   
         }    
     }
 
@@ -248,14 +269,12 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                     .catch(function(error){
                         console.log(error)
                     })    
-                    */    
-                  
+                    */                     
                 }                
             })
             .catch(function(error){
                 console.log(error)
-            })    
-    
+            })      
         }
     }
 
@@ -330,9 +349,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
           currentValue.Total = TotalF
           console.log(arr)
         })
-        */
-
-        
+        */        
     /*    order.Total = TotalF
         console.log(order)
     */ 
@@ -349,6 +366,16 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
       };
       
   return (
+        popPupMensajeProductos
+        ?
+        <Popup>
+        <Header Text="El Cliente no cuenta con productos default. Es necesario darlos de alta."/>
+        <Loader/>
+            <div className = "d-100 comboBTNS">
+            <Error Text="Aceptar" F_Click={()=>setPopPupMensajeProductos(false)}/>
+            </div>
+        </Popup>
+        :
       <><form className='formPedidos' onSubmit={crearPedido} onChange={handleChange}>
         <div className='container'>
             
@@ -357,7 +384,8 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                         <label className='label'>Ficha Cliente</label>
                         <input type="text" name="K_Nombre" className='input' value={vK_Cliente} disabled/>
                     </div>
-                    {/*
+                    {
+                    /*
                     <div className='pedidoNombre'>
                         <label className='label'>Nombre</label>
                         <input type="text" name="Nombre" className='input' defaultValue={orderInfo.D_Cliente}/>
@@ -368,15 +396,15 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                         {/*<div className="searchInputs">*/}
                             <label className='label'>Nombre</label>
                             <input
-                            type="text" name="Nombre" className="input"
-                            placeholder={placeholder}
-                            value={busqueda}
-                            onChange={handleFilter}
+                                type="text" name="Nombre" className="input"
+                                placeholder={placeholder}
+                                value={busqueda}
+                                onChange={handleFilter}
                             />
                         {/*</div>*/}
                         {
                             Client.length !== 0 && (
-                            <div className="dataResult">
+                            <div className="dataResult" style={{display: disabled ? "block" : "none"}}>
                                 {Client.slice(0, 15).map((value, key) => {
                                 return (
                                     <a className="dataItem" onClick={event=>ActionPopup(event,value.K_Cliente,value.Adeudo,value.Nombre+' '+value.Apellidos)} >
@@ -433,7 +461,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                     
                         <div className='Table'>
                             <label className='label'>Observaciones</label>
-                            <input type="text" className='input' defaultValue={orderInfo.Observaciones}/>
+                            <input type="text" className='input' value={orderInfo.Observaciones}/>
                         </div>
                     </div>
                     <div className='d-40 justifyRight'>
