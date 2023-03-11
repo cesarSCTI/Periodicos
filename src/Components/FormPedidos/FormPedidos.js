@@ -11,7 +11,7 @@ import './FormPedidos.css';
 import { object } from 'yup';
 
 const FormPedidos = ({PedidoData, orderInfo}) => {
-    const [isOpen, setIsopen] = useState(false)
+    const[isOpen, setIsopen] = useState(false)
     const[popPupCancelar,setPopPupCancelar] = useState(false)
     const[popPupEliminar,setPopPupEliminar] = useState(false)
     const[popPupGuardar,setPopPupGuardar] = useState(false)
