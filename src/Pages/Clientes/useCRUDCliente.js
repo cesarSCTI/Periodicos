@@ -62,9 +62,10 @@ export const useCRUDCliente = () =>{
         const validacion = Schema.isValid(Cliente)
 
         if(validacion){ 
-          //AXIOS
+          //AXIOS      
           axios.post(" https://api-rest-sist-periodico.deversite.com/api/cliente", new URLSearchParams(Cliente),{
             headers:{
+              'Content-Type': 'application/x-www-form-urlencoded'
             }} )
           .then(function (response) {
             console.log(response);
@@ -74,8 +75,12 @@ export const useCRUDCliente = () =>{
           });
         }
         else{
-
+          
         }
+        setTimeout(()=>{
+          navigate("../clientes", { replace: true });
+        },2000)
+        
     }
 
     //Registro de cambios segun el input

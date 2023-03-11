@@ -1,30 +1,33 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Success } from '../Buttons/Buttons'
 import PedidoProductos from './PedidoProductos'
 import PedidoTitles from './PedidoTitles'
+import { usePedidoDefault } from "./usePedidoDefault"
 
-const PedidoDefault = ({ClienteID}) => {
-  const [data, setData] = useState([])
+ 
+  const PedidoDefault = ({ ClienteID }) => {
+    const {reqProducts, datos} = usePedidoDefault(ClienteID);
+    
+    useEffect(() => {
+      reqProducts(ClienteID);
+    }, [])
 
-  const reqProducts = async () =>{
-    const response = await fetch(`https://api-rest-sist-periodico.deversite.com/productos_dia_default`)
-    const data = await response.json().finally()
-    setData(data)
-  }
-  useEffect(()=>{
-    reqProducts()
-  }, [])
   return (
     <div className='container'>
-       <PedidoTitles/>
-        <form className='formularioProductDefault'>
-          {data.map((ele) => 
-            <PedidoProductos Producto={ele}/>
-          )}
-          <div className='formulario-btn'>
-            <Success Text="Guardar" /> 
-          </div>
-        </form>
+      <PedidoTitles />
+
+      <form className='formularioProductDefault' onSubmit={() => alert()}>
+        {
+          datos.length === 0
+          ?<></>
+          :<>
+          {datos.map((ele, i) => (<PedidoProductos Producto={ele} key={i}/>) )}
+          </>
+        }
+        <div className='formulario-btn'>
+          <Success Text="Guardar" />
+        </div>
+      </form>
     </div>
   )
 }
