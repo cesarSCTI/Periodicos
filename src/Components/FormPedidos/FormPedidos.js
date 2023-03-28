@@ -1,7 +1,7 @@
 import React, {useState,Component} from 'react'
 import { Success,Error } from '../Buttons/Buttons';
 import ContentPopupPedido from '../ContentPopupPedido/ContentPopupPedido';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavigationType, useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import Header from '../Header/Header';
 import Loader from '../Loader/Loader';
@@ -168,6 +168,16 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
       }) 
     }
 
+    
+    const ticketPrint = () =>{
+      console.log(PedidoData)
+      navigate('/ticket', {
+          state:{
+            items:PedidoData
+          }
+        });
+    }
+
   return (
     popPupCancelar
       ?<Popup>
@@ -280,7 +290,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
             {
                 orderInfo.Estatus == "PAGADO"
                 ?<div className='Table'> 
-                <Success Text="Ticket"/>
+                <Success Text="Ticket" F_Click={ticketPrint}/>
                 <Error Text="Cancelar" F_Click={()=>setPopPupCancelar(true)} />
                 </div>
                 :orderInfo.Estatus == "GENERADO"
