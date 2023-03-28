@@ -16,12 +16,17 @@ export const usePedidoDefault = () => {
 
     //handle
     const handleChangeProductsDaily = (e) => {
-        setDatos({ 
-            ...datos, 
-            [e.target.name]: e.target.value 
-        })
-        console.log(datos)
+        const aux = [...datos]
+        for(let i =0; i < aux.length; i++){
+            if(Object.keys(aux[i]).some(x => x == e.target.name)){
+                aux[i][e.target.name] = e.target.value
+                //console.log(aux[i])
+            }
+        }
+        console.log(aux)
+        setDatos(aux)
     }
+    
 
     return { handleChangeProductsDaily, reqProducts , datos}
 }
