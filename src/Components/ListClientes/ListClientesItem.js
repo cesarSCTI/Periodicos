@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { Opc, Error } from '../Buttons/Buttons';
+import { Opc, Error, SuccessVer } from '../Buttons/Buttons';
 import './ListClientes.css';
 
 const ListClientesItem = ({cl}) => {
@@ -13,7 +13,7 @@ const ListClientesItem = ({cl}) => {
       <div className='d-30'>{cl.Direccion}</div>
       <div className='d-10'>${cl.Adeudo}</div>
       <div className='d-20 opc'>
-       <Link to={`/clientes/${cl.K_Cliente}`}> <Opc Text="Editar" /></Link>
+       <Link to={`/clientes/${cl.K_Cliente}`}> <SuccessVer/></Link>
       </div>
     </div>
 </div>

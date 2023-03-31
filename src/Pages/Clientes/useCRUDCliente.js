@@ -63,7 +63,7 @@ export const useCRUDCliente = () =>{
 
         if(validacion){ 
           //AXIOS      
-          axios.post(" https://api-rest-sist-periodico.deversite.com/api/cliente", new URLSearchParams(Cliente),{
+          axios.post(" https://api-rest-sist-periodico.deversite.com/cliente", new URLSearchParams(Cliente),{
             headers:{
               'Content-Type': 'application/x-www-form-urlencoded'
             }} )

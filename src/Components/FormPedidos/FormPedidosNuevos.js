@@ -436,6 +436,8 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                             <div>
                             {
                                 /*<PedidoProductsNuevos listProducts={PedidoData} Orders = {formData} T1="Nombre" T2="Pedido" T3="Devoluciones" T4="Precio" T5="Total"/>*/
+                                PedidoData.length>0
+                                ?
                                 PedidoData.map((ele) =>
                                 <div className='contentProducts' key={ele.K_Producto}>
                                     <div className='d-20'>{ele.Nombre_Producto}</div>
@@ -451,9 +453,10 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                                     <div className='d-20'>
                                     <input type="text" name={"Total_"+ele.K_Producto} className='inputProduct' value={ele.Total} disabled/>
                                     </div>
-                                </div>
+                                </div>                              
                                 
                                 )
+                                :<></>
                             }
                             </div>
                             }
