@@ -1,11 +1,15 @@
 import { useState, useEffect} from 'react'
-
+import { useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios'
+import { object } from 'yup'
 
 
 export const usePedidoDefault = () => {
 
-    const [datos, setDatos] = useState([])
-    const [Productos, setProductos] = useState(datos)
+    const [Datos, setDatos] = useState([])
+    //const [Productos, setProductos] = useState(Datos)
+    const navigate = useNavigate();
+    const parameter = useParams()
 
     //request
     const reqProducts = async (ClienteID) => {
@@ -16,17 +20,50 @@ export const usePedidoDefault = () => {
 
     //handle
     const handleChangeProductsDaily = (e) => {
-        const aux = [...datos]
-        for(let i =0; i < aux.length; i++){
-            if(Object.keys(aux[i]).some(x => x == e.target.name)){
-                aux[i][e.target.name] = e.target.value
-                //console.log(aux[i])
+        var aux = [...Datos]
+        for(let i = 0; i < Datos.length; i++){
+            if(Object.keys(Datos[i]).some(x => x == e.target.name)){
+                Datos[i][e.target.name] = e.target.value;
             }
         }
-        console.log(aux)
-        setDatos(aux)
+
+        console.log("handle")
+        console.log(Datos)
+        setDatos(Datos)
+        
+        /*aux.map((ele) => {
+            if (Object.keys(ele).some(x => x == e.target.name)) {
+                ele[e.target.name] = e.target.value
+            }
+            else {
+               setDatos(...aux);
+            }
+        })*/
+        //console.log(Datos)
     }
     
+    //Post
+    const Envio = (e) => {
+        e.preventDefault()
+        console.log("Envio")
+        console.log(Datos)
+        axios.post(`https://api-rest-sist-periodico.deversite.com/cliente/actualizar_productos_dias/${parameter.id}`, Datos, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+          .then(function (response) {
+            console.log('response ' + JSON.stringify(response));
+            if (response.status == 200) {
+              console.log("se envio correctamente")
+              //navigate(-1, { replace: true });
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+          navigate(-1, { replace: true });
+      }
 
-    return { handleChangeProductsDaily, reqProducts , datos}
+    return { handleChangeProductsDaily, reqProducts , Datos, Envio, setDatos}
 }
