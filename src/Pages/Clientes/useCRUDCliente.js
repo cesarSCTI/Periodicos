@@ -15,6 +15,7 @@ export const useCRUDCliente = () =>{
     })
     const [isLoading, setIsloading] = useState(true)
     const [sureDelete, setSureDelete] = useState(false)
+    const [popPupGuardar , setpopPupGuardar] = useState(false)
     const navigate = useNavigate()
 
   //openPOPUP DELETE
@@ -69,6 +70,7 @@ export const useCRUDCliente = () =>{
             }} )
           .then(function (response) {
             console.log(response);
+            setpopPupGuardar(true)
           })
           .catch(function (error) {
             console.log(error);
@@ -103,5 +105,5 @@ export const useCRUDCliente = () =>{
         requestCliente()
     },[])
 */
-    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, requestCliente, sureDelete, openPOPUP}
+    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, requestCliente, sureDelete, openPOPUP,popPupGuardar}
 }

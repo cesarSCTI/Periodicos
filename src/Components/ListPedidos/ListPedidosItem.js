@@ -30,7 +30,8 @@ const ListPedidosItem = ({infoOrder}) => {
       console.log(response);
       if(response.status == 200){
         setPopPupCancelar(false)
-        navigate("../pedidos",{replace:true});
+        //navigate("../pedidos",{replace:true});
+        navigate("../", { replace: true });
       }
     })
     .catch(function(error){
@@ -51,7 +52,8 @@ const ListPedidosItem = ({infoOrder}) => {
       console.log(response);
       if(response.status == 200){
         setPopPupCancelar(false)
-        navigate("../pedidos",{replace:true});
+        navigate("../",{replace:true});
+        //navigate(-1, { replace: true });
       }
     })
     .catch(function(error){

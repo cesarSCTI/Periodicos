@@ -56,13 +56,14 @@ export const usePedidoDefault = () => {
             console.log('response ' + JSON.stringify(response));
             if (response.status == 200) {
               console.log("se envio correctamente")
-              //navigate(-1, { replace: true });
+              navigate(-1, { replace: true });
+              //return true
             }
           })
           .catch(function (error) {
             console.log(error)
           })
-          navigate(-1, { replace: true });
+          //navigate(-1, { replace: true });
       }
 
     return { handleChangeProductsDaily, reqProducts , Datos, Envio, setDatos}

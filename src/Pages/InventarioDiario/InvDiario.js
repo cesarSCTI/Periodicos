@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { Error } from '../../Components/Buttons/Buttons'
 import FormInvDiario from '../../Components/FormInvDiario/FormInvDiario'
 import Header from '../../Components/Header/Header'
@@ -9,6 +9,7 @@ import { useProductPetition } from '../Productos/HooksProductos'
 import FormInvDiarioActual from '../../Components/FormInvDiario/FormInvDiarioActual'
 
 import * as moment from 'moment'
+import Popup from '../../Components/Popup/Popup'
 
 
 const InvDiario = () => {
@@ -18,7 +19,8 @@ const InvDiario = () => {
     const [todayReady, setTodayReady] = useState(false)
     const [existInv,setExist] = useState(false)
     const [intearioAct,setInventarioAct]=useState([])
-
+    const [popPupMensajeInventario,setPopPupMensajeInventario] = useState(false)
+    const navigate = useNavigate();
 
     const date = new Date()
 
@@ -58,6 +60,12 @@ const InvDiario = () => {
         })
             .then(function (response) {
                 console.log(response);
+                if(response.status==200)
+                {
+                    setPopPupMensajeInventario(true)
+                    
+
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -79,11 +87,26 @@ const InvDiario = () => {
         }
     }
 
+    const closeMensaje = () =>{
+        setPopPupMensajeInventario(false)
+        navigate("../",{replace:true});
+    }
+
     useEffect(()=>{
         requestInventario()
     },[])
 
     return (
+        popPupMensajeInventario
+        ?
+        <Popup>
+            <Header Text="El Invetario Diaro fue registrado correctamente...!"/>
+            <Loader/>
+            <div className='d-100 comboBTNS'>
+                <Error Text="Aceptar" F_Click={()=>closeMensaje()}/>
+            </div>
+        </Popup>
+        :
         <>
             <Header Text={`Productos del dia | ${date}`}>
                 <Link to="/"><Error Text="Regresar" /></Link>

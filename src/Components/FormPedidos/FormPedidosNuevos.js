@@ -18,6 +18,7 @@ import { Link, useNavigate } from 'react-router-dom'
 //import { json } from "stream/consumers";
 import { ErrorCancel, ErrorEliminar, Opc, SuccessPago, SuccessVer } from '../Buttons/Buttons'
 
+import * as moment from 'moment'
 const FormPedidosNuevos = ({orderInfo,placeholder}) => {
 
     const [isOpen, setIsopen] = useState(false)
@@ -35,6 +36,9 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     const[disabled, setDisabled] = useState(true)
 
     const[popPupMensajeProductos,setPopPupMensajeProductos] = useState(false);
+    const[popPupGuardar,setPopPupGuardar] = useState(false);
+
+    const [popPupMensajeInventario,setPopPupMensajeInventario] = useState(false)
     
     const navigate = useNavigate();
 
@@ -125,10 +129,10 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     const  requestPedidoDefaultCD = async (K_Cliente,Adeudo)=>{
         //const date = new Date("December 5, 2022 01:15:00");
         const date = new Date();
-        var NumDay = 1;//date.getDay();
-        //if(NumDay==0){
-        //    NumDay = 7
-        //}
+        var NumDay = date.getDay();
+        if(NumDay==0){
+            NumDay = 7
+        }
         console.log(K_Cliente)
         console.log(NumDay);
         const response = await fetch(`https://api-rest-sist-periodico.deversite.com/pedido_detalle_default_cd/${K_Cliente}/${NumDay}`)
@@ -190,6 +194,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
 
     useEffect(()=>{
       //requestPedidosCobranza()
+      requestInventario()
       requestClient()
       //requestPedidoDefaultCD(formData.K_Cliente,formData.Adeudo)
       //setTotal_Pedido(vTotal_Pedido)  
@@ -206,6 +211,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     //  Crear Pedido
     const crearPedido = (e)=>{
         e.preventDefault()
+        //requestInventario();
         const validacion = Schema.isValid(formData)
         if(validacion){ 
             console.log("Ante "+PedidoData)
@@ -292,11 +298,12 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         })
         .then(function(response){
             console.log('response '+JSON.stringify(response));
-            /*
+            
             if(response.data.status == 200){
-                navigate("../pedidos",{replace:true});
+                setPopPupGuardar(true)
+                //navigate("../pedidos",{replace:true});
             }
-            */
+            
         })
         .catch(function(error){
             console.log(error)
@@ -364,8 +371,48 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         //setFilteredData([]);
         //setWordEntered("");
       };
+
+      const closeMensaje = () =>{
+        setPopPupGuardar(false)
+        navigate("../pedidos",{replace:true});
+    }
+
+    const closeMensajeInv = () =>{
+        setPopPupMensajeInventario(false)
+        navigate("../pedidos",{replace:true});
+    }
+
+    const requestInventario = async()=>{
+        const  dat = new Date();
+        let dateAct = moment(dat).format('YYYY-MM-DD')
+        const response = await fetch(`https://api-rest-sist-periodico.deversite.com/inventario_dia/${dateAct}`)
+        const data = await response.json().finally()
+        console.log(data)
+        if(data.length==0){
+            setPopPupMensajeInventario(true)
+        }
+        /*
+        if(data.length>0){
+            setExist(true)
+            //setformData(data)
+            //createObj()
+            console.log("requestInventario")
+            setInventarioAct(data)
+        }
+        */
+    }
       
   return (
+        popPupMensajeInventario
+        ?
+        <Popup>
+            <Header Text="Es necesario la captura del Invetario Diaro para continuar...!"/>
+            <Loader/>
+            <div className='d-100 comboBTNS'>
+                <Error Text="Aceptar" F_Click={()=>closeMensajeInv()}/>
+            </div>
+        </Popup>
+        :
         popPupMensajeProductos
         ?
         <Popup>
@@ -373,6 +420,16 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         <Loader/>
             <div className = "d-100 comboBTNS">
             <Error Text="Aceptar" F_Click={()=>setPopPupMensajeProductos(false)}/>
+            </div>
+        </Popup>
+        :
+        popPupGuardar
+        ?
+        <Popup>
+            <Header Text="El Pedido fue registrado correctamente...!"/>
+            <Loader/>
+            <div className='d-100 comboBTNS'>
+                <Error Text="Aceptar" F_Click={()=>closeMensaje()}/>
             </div>
         </Popup>
         :
