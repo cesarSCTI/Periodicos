@@ -19,6 +19,7 @@ import ProductosList from '../Pages/Productos/ProductosList';
 import Reportes from '../Pages/Reportes/Reportes';
 import ErrorComponent from '../Components/ErrorComponent/ErrorComponent';
 import TicketExample from '../Pages/Ticket/TicketExample';
+import TicketExample_2 from '../Pages/Ticket/TicketExample_2';
 
 const Routing = () => {
   const { Allow }  = useContext(usuarioContext)
@@ -58,6 +59,7 @@ const Routing = () => {
                 <Route path='/reportes' element={<Reportes />}/>
                 {/*Tickets */}
                 <Route path='/ticket' element={<TicketExample/>}/>
+                <Route path='/ticket_2' element={<TicketExample_2/>}/>
                 {/*Errores de url*/}
                 <Route path='/*' element={<ErrorComponent />}/>
               </Routes>

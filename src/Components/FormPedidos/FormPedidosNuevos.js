@@ -318,8 +318,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         console.log("handleChange "+formData)
       }
     
-      const handleOnChange = (e, a) =>{
-        
+      const handleOnChange = (e, a) =>{        
         let arr = e.target.name.split('_');
         console.log("cant_"+arr[1]+" "+e.target.value);
         console.log("cant 2 "+e.target.name);
@@ -336,7 +335,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
           
           if(product.K_Producto==arr[1]){
             console.log("q")
-            product.Total = `${(Number(SumaTotalF)*Number(product.PrecioUnitario))}`
+            product.Total = `${(Number(SumaTotalF)*Number(product.PrecioUnitario))-(Number(product.Devoluciones)*Number(product.PrecioUnitario))}`
             product.Cantidad = `${Number(SumaTotalF)}`
             }
           TotalPedido+= Number(product.Total)
@@ -365,6 +364,24 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         console.log(formData)
       }
       
+      const handleChangeDev = (e,a) =>{
+        let arr = e.target.name.split('_');
+        var aux = [...PedidoData]
+        var TotalPedido_Fin = 0
+        console.log(e.target.name)
+        console.log(PedidoData)
+        for(let i = 0;i<PedidoData.length;i++){
+            if(PedidoData[i].K_Producto==arr[1]){
+                PedidoData[i].Devoluciones = e.target.value
+                PedidoData[i].Total = (Number(PedidoData[i].Cantidad)*Number(PedidoData[i].PrecioUnitario)) - (Number(e.target.value)*Number(PedidoData[i].PrecioUnitario))
+                //console.log(PedidoData[i])
+            }
+            TotalPedido_Fin += Number(PedidoData[i].Total)
+        }
+        order.Total_Pedido = TotalPedido_Fin
+        order.Total = TotalPedido_Fin + Number(order.Adeudo)
+      }
+
       const clearInput = () => {
         setClient([])
         setBusqueda("")
@@ -383,8 +400,10 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     }
 
     const requestInventario = async()=>{
-        const  dat = new Date();
+        const dat = new Date("April 15, 2023 01:15:00");
+        //const  dat = new Date();
         let dateAct = moment(dat).format('YYYY-MM-DD')
+        console.log(dateAct)
         const response = await fetch(`https://api-rest-sist-periodico.deversite.com/inventario_dia/${dateAct}`)
         const data = await response.json().finally()
         console.log(data)
@@ -502,7 +521,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                                     <input type="text" name={"Cant_"+ele.K_Producto} className='inputProduct' defaultValue={ele.Cantidad} onChange={(name, value) => handleOnChange(name, value)}/>
                                     </div>
                                     <div className='d-20'>
-                                    <input type="text" className='inputProduct' defaultValue={ele.Devoluciones} />
+                                    <input type="text" name={"Dev_"+ele.K_Producto} className='inputProduct' defaultValue={ele.Devoluciones} onChange={handleChangeDev}/>
                                     </div>
                                     <div className='d-20'>
                                     <input type="text" refs={"Precio_"+ele.K_Producto} name={"Precio_"+ele.K_Producto} className='inputProduct' defaultValue={ele.PrecioUnitario} disabled/>

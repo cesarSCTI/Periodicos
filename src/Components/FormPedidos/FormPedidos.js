@@ -9,12 +9,14 @@ import Popup from '../Popup/Popup';
 import PedidoProducts from './PedidoProducts';
 import './FormPedidos.css';
 import { object } from 'yup';
+import ContentPopupTicket from '../ContentPopupPedido/ContentPopupTicket';
 
 const FormPedidos = ({PedidoData, orderInfo}) => {
     const[isOpen, setIsopen] = useState(false)
     const[popPupCancelar,setPopPupCancelar] = useState(false)
     const[popPupEliminar,setPopPupEliminar] = useState(false)
     const[popPupGuardar,setPopPupGuardar] = useState(false)
+    const[popPupTicket,setPopPupTicket] = useState(false)
     //
     const [order,setOrder] = useState(orderInfo)
     const [products, setProducts] = useState(PedidoData)
@@ -81,7 +83,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
       console.log("Cantidad: "+Cantidad)
       const newProduct = PedidoData.map(product =>{
         if(product.K_Producto==K_Producto){
-            product.Total = `${(Number(Cantidad)*Number(product.PrecioUnitario))}`
+            product.Total = `${(Number(Cantidad)*Number(product.PrecioUnitario))-(Number(product.Devoluciones)*Number(product.PrecioUnitario))}`
             product.Cantidad = `${Number(Cantidad)}`
         }
         TotalPedido += Number(product.Total)
@@ -93,6 +95,37 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
       console.log(products)
       setProducts(newProduct)
       setOrder(orderInfo)
+    }
+
+    const handleChangeDev = (e,a) =>{
+      let arr = e.target.name.split('_');
+      var TotalPedido_Fin = 0
+      console.log(e.target.name)
+      console.log(PedidoData)
+      const newProduct = PedidoData.map(product =>{
+        if(product.K_Producto==arr[1]){
+          product.Devoluciones = e.target.value
+          product.Total = (Number(product.Cantidad)*Number(product.PrecioUnitario)) - (Number(e.target.value)*Number(product.PrecioUnitario))
+        }
+        TotalPedido_Fin += Number(product.Total)
+        return product
+      })
+      /*
+      for(let i = 0;i<PedidoData.length;i++){
+        if(PedidoData[i].K_Producto==arr[1]){
+          //console.log(arr[1])
+          PedidoData[i].Devoluciones = e.target.value
+          PedidoData[i].Total = (Number(PedidoData[i].Cantidad)*Number(PedidoData[i].PrecioUnitario)) - (Number(e.target.value)*Number(PedidoData[i].PrecioUnitario))
+          console.log(PedidoData)
+        }
+        TotalPedido_Fin += Number(PedidoData[i].Total)
+      }
+      */
+      setProducts(newProduct)
+      //order.Total_Pedido = TotalPedido_Fin
+      //order.Total = TotalPedido_Fin + Number(order.Adeudo)
+      orderInfo.Total_Pedido = TotalPedido_Fin
+      orderInfo.Total = TotalPedido_Fin + Number(order.Adeudo)
     }
 
     const guardarPedido = (pedido) =>{
@@ -178,6 +211,21 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
         });
     }
 
+    const ticketPrint_2 = () =>{
+      console.log(PedidoData)
+      navigate('/ticket_2', {
+          state:{
+            items:PedidoData,
+            K_Pedido: orderInfo.K_Pedido,
+            adeudo:orderInfo.Adeudo,
+            pago:orderInfo.Pago_Abono,
+            ficha:orderInfo.K_Cliente,
+            cliente:orderInfo.D_Cliente,
+            noPedido:orderInfo.K_Pedido
+          }
+        });
+    }
+
   return (
     popPupCancelar
       ?<Popup>
@@ -210,6 +258,12 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
           <Error Text="No" F_Click={()=>setPopPupGuardar(false)}/>
           <Success Text="Si" F_Click={()=>guardarPedido(orderInfo)}/>
         </div>
+      </Popup>
+      :
+      popPupTicket
+      ?
+      <Popup>
+        <ContentPopupTicket K_Pedido={orderInfo.K_Pedido} orderInfo={orderInfo}/>
       </Popup>
       :
       <>
@@ -245,7 +299,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                                     <input type="text" name={"Cant_"+ele.K_Producto} className='inputProduct' defaultValue={ele.Cantidad} onChange={(name, value) => handleOnChange(name, value)} disabled = {orderInfo.Estatus == "PAGADO" ? 'disabled' : ''}/>
                                     </div>
                                     <div className='d-20'>
-                                    <input type="text" className='inputProduct' defaultValue={ele.Devoluciones} disabled = {orderInfo.Estatus == "PAGADO" ? "disabled" : ""}/>
+                                    <input type="text" name={"Dev_"+ele.K_Producto} className='inputProduct' defaultValue={ele.Devoluciones} onChange={handleChangeDev} disabled = {orderInfo.Estatus == "PAGADO" ? "disabled" : ""}/>
                                     </div>
                                     <div className='d-20'>
                                     <input type="text" refs={"Precio_"+ele.K_Producto} name={"Precio_"+ele.K_Producto} className='inputProduct' defaultValue={ele.PrecioUnitario} disabled/>
@@ -290,7 +344,9 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
             {
                 orderInfo.Estatus == "PAGADO"
                 ?<div className='Table'> 
-                <Success Text="Ticket" F_Click={ticketPrint}/>
+                {/*<Success Text="Ticket" F_Click={ticketPrint}/>
+                <Success Text="Ticket" F_Click={()=>setPopPupTicket(true)}/>*/}
+                <Success Text="Ticket" F_Click={ticketPrint_2}/>
                 <Error Text="Cancelar" F_Click={()=>setPopPupCancelar(true)} />
                 </div>
                 :orderInfo.Estatus == "GENERADO"
