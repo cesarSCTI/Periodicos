@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { ErrorCancel, ErrorEliminar, Opc, SuccessPago, SuccessVer } from '../Buttons/Buttons'
+import { ErrorCancel, ErrorEliminar, Opc, SuccessPago, SuccessTicket, SuccessVer } from '../Buttons/Buttons'
 import { Link, useNavigate } from 'react-router-dom'
 import './ListPedidos.css'
 import { Error,Success } from '../Buttons/Buttons'
@@ -85,6 +85,21 @@ const ListPedidosItem = ({infoOrder}) => {
     }
   }
 
+  const ticketPrint_2 = () =>{
+    //console.log(PedidoData)
+    navigate('/ticket_2', {
+        state:{
+          //items:PedidoData,
+          K_Pedido: infoOrder.K_Pedido,
+          adeudo:infoOrder.Adeudo,
+          pago:infoOrder.Pago_Abono,
+          ficha:infoOrder.K_Cliente,
+          cliente:infoOrder.D_Cliente,
+          noPedido:infoOrder.K_Pedido
+        }
+      });
+  }
+
   /*
   const eliminarPedido =(pedido) =>{
     fetch(`https://api-rest-sist-periodico.deversite.com/eliminar_pedido/${pedido}`,{
@@ -150,6 +165,11 @@ const ListPedidosItem = ({infoOrder}) => {
                 ?<SuccessPago F_Click={ActionPopup}/>
                 :<></>
                 //<Link to={`https://api-rest-sist-periodico.deversite.com/login/alan/12345`}><SuccessVer/></Link>
+              }
+              {
+                infoOrder.Estatus == "PAGADO"
+                ?<SuccessTicket F_Click={ticketPrint_2}/>
+                :<></>
               }
               {
                 infoOrder.Estatus == "GENERADO" || infoOrder.Estatus == "PAGADO"

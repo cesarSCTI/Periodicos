@@ -9,7 +9,7 @@ const  dat = new Date();
 let dateAct = moment(dat).format('MM/DD/YYYY hh:mm:ss')
 const navigate = useNavigate()
 const location = useLocation();
-const { items } = location.state;
+//const { items } = location.state;
 const {K_Pedido} = location.state;
 const {adeudo} = location.state;
 const {pago} = location.state;
@@ -17,7 +17,7 @@ const {ficha} = location.state;
 const {cliente} = location.state;
 const {noPedido} = location.state;
 
-const [data, setData] = useState(items)
+//const [data, setData] = useState(items)
 const [total, setTotal] = useState(0)
 const [pedidoDetDev, setPedidoDetDev] = useState([])
 const [pedidoDet,setPedidoDet] = useState([])

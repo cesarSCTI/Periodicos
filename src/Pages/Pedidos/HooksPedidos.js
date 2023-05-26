@@ -6,10 +6,11 @@ export const usePetitionPedidos = () =>{
     const [Pedidos, setPedidos] = useState([])
     const [tablaPedidos, setTablaPedidos] = useState([])
     const [busqueda, setBusqueda] = useState({})
+    const [data,setData] = useState([])
 
     //REQUEST
     const requestPedidos = async () => {
-        const response = await fetch(`https://api-rest-sist-periodico.deversite.com/pedidos`)
+        const response = await fetch(`https://api-rest-sist-periodico.deversite.com/pedidos_dia`)
         const data = await response.json().finally()
         setPedidos(data)
         setTablaPedidos(data)
@@ -32,9 +33,25 @@ export const usePetitionPedidos = () =>{
         setPedidos(resultadosBusqueda);
     }
 
+    const fechasHandle = (e)=>{
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        })
+        console.log(data)
+    }
+
+    const fechasSend = async (e)=>{
+        e.preventDefault()
+        const response = await fetch(`https://api-rest-sist-periodico.deversite.com/pedidos_fecha/${data.date1}/${data.date2}`);
+        const dato = await response.json().finally()
+        setPedidos(dato)
+        setTablaPedidos(dato)
+    }
+
     useEffect(()=>{
         requestPedidos()
     },[])
 
-    return {tablaPedidos, Pedidos, setPedidos, handleBusqueda}
+    return {tablaPedidos, Pedidos, setPedidos, handleBusqueda,fechasHandle,fechasSend}
  }

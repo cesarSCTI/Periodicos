@@ -83,3 +83,10 @@ export const SuccessPagoInfo = ({F_Click}) => {
     </button>
   )
 }
+export const SuccessTicket = ({F_Click}) =>{
+  return (
+    <button className='btn actions success-item' onClick={F_Click}> 
+      <i class="bx bx-printer icon-item"></i>
+    </button>
+  )
+}
