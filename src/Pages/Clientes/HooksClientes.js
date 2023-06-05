@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useClientsPetition = () => {
     
+    const navigate = useNavigate();
     const [Client, setClient] = useState([])
     const [tablaClient, setTablaClient] = useState([])
     const [busqueda, setBusqueda] = useState({})
@@ -30,12 +32,20 @@ export const useClientsPetition = () => {
         console.log(resultadosBusqueda)
         setClient(resultadosBusqueda);
     }
+    //ticketAdeudo
+    const ticketAdeudo =() =>{
+        navigate('/ticketAdeudo',{
+            state:{
+                items:Client
+            }
+        })
+    }
 
     useEffect(()=>{
         requestClient()
     },[])
 
-    return {tablaClient, Client, setClient, handleBusqueda}
+    return {tablaClient, Client, setClient, handleBusqueda,ticketAdeudo}
 }
 
 /*export const RequestAPI = (url) => {

@@ -18,7 +18,7 @@ import {useState} from 'react'
         const response = await fetch(`https://api-rest-sist-periodico.deversite.com/reporte_inventario/${data.date1}/${data.date2}`)
         const dato = await response.json().finally()
         setReport(dato)
-        console.log(report)
+        console.log(dato)
     }
     return{reportHandle, reportsend, report}
 }

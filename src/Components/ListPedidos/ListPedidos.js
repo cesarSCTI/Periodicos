@@ -8,7 +8,8 @@ const ListPedidos = () => {
           <div className='d-10'>Pedido</div>
           <div className='d-20'>Cliente</div>
           <div className='d-10'>Total</div>
-          <div className='d-20'>Fecha de creación</div>
+          <div className='d-10'>Pago</div>
+          <div className='d-10'>Fecha de creación</div>
           <div className='d-20'>Status</div>
           <div className='d-20'>Opciones</div>
         </div>

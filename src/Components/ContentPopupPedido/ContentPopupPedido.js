@@ -5,12 +5,15 @@ import './ContentPopupPedido.css';
 import * as yup from "yup";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
- 
+import Popup from '../Popup/Popup'
+
 const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
   console.log(orderInfo);
   const navigate = useNavigate();
   const [resta, setResta] = useState();
   const Abonos = resta;
+
+  const[isOpen,setIsopen] = useState(true)
   
   /*
   const [formData,setformData] = useState({ 
@@ -46,6 +49,7 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
   const pagoPedido = (e) => {
     e.preventDefault()
     const validacion = Schema.isValid(formData)
+    var exist = false;
     if(validacion){ 
       console.log("validacion "+JSON.stringify(formData))
       axios.post(`https://api-rest-sist-periodico.deversite.com/pagar_pedido/${orderInfo.K_Pedido}`,new URLSearchParams(formData),{
@@ -56,12 +60,18 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
       .then(function(response){
         console.log(response);
         if(response.status == 200){
-          navigate("../pedidos",{replace:true});
+          exist = true;
+          setIsopen(false)        
+          
         }
       })
       .catch(function(error){
         console.log(error)
       })
+        setTimeout(()=>{
+            //navigate("/pedidos", { replace: true });
+            navigate("/");
+          },5000)
     }
   }
 
@@ -86,7 +96,7 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
     console.log("handleInputChange "+formData+" - "+formData.Pago_Abono)
   }
   return (
-    <>
+    isOpen &&<>
         <Header Text="Pago Pedido" >
             <Error Text="Cerrar" F_Click={F_Click_Cerrar}/>
         </Header>

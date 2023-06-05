@@ -14,7 +14,9 @@ const Reportes = () => {
     <div className="container top">
       <FormFechas cambiar={reportHandle} enviar={reportsend}/>
       <TableReports data={report} />
-      <Success Text={"imprimir"} F_Click={()=>window.print()}/>
+      {
+        //<Success Text={"imprimir"} F_Click={()=>window.print()}/>
+      }
     </div>
     </>
   )

@@ -219,7 +219,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
             K_Pedido: orderInfo.K_Pedido,
             adeudo:orderInfo.Adeudo,
             pago:orderInfo.Pago_Abono,
-            ficha:orderInfo.K_Cliente,
+            ficha:orderInfo.Ficha,
             cliente:orderInfo.D_Cliente,
             noPedido:orderInfo.K_Pedido
           }
@@ -272,7 +272,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                 <div className='inputsName'>
                     <div className='pedidoFicha'>
                         <label className='label'>Ficha Cliente</label>
-                        <input type="text" className='input' defaultValue={orderInfo.K_Cliente} disabled/>
+                        <input type="text" className='input' defaultValue={orderInfo.Ficha} disabled/>
                     </div>
                     <div className='pedidoNombre'>
                         <label className='label'>Nombre</label>

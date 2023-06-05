@@ -7,6 +7,7 @@ export const useCRUDCliente = () =>{
     const parameter = useParams()
     const [Cliente, setCliente] = useState({
         "K_Cliente":0,
+        "Ficha":0,
         "Nombre":"",
         "Apellidos":"",
         "Telefono":"",
@@ -43,6 +44,8 @@ export const useCRUDCliente = () =>{
       
         const response= await fetch(`https://api-rest-sist-periodico.deversite.com/clientes/${parameter.id}`)
         const data = await response.json().finally()
+        console.log("Get")
+        console.log(data)
         setCliente(data[0])
         setIsloading(false)
       
@@ -51,6 +54,7 @@ export const useCRUDCliente = () =>{
     //POST
     let Schema = yup.object().shape({
         K_Cliente: yup.number(),
+        Ficha:yup.number(),
         Nombre: yup.string().required('campo obligatorio'),
         Apellidos: yup.string().required('campo obligatorio'),
         Telefon: yup.number().max(10),
@@ -63,6 +67,8 @@ export const useCRUDCliente = () =>{
         const validacion = Schema.isValid(Cliente)
 
         if(validacion){ 
+          console.log("Act")
+          console.log(Cliente)
           //AXIOS      
           axios.post(" https://api-rest-sist-periodico.deversite.com/cliente", new URLSearchParams(Cliente),{
             headers:{
@@ -93,9 +99,10 @@ export const useCRUDCliente = () =>{
           [e.target.name]: e.target.value,
           K_Cliente : Number(Cliente.K_Cliente),
           Adeudo: Number(Cliente.Adeudo),
-          B_Activo: Number(Cliente.B_Activo)
+          B_Activo: Number(Cliente.B_Activo),
+          //Ficha:Number(Cliente.Ficha)
         })
-
+        console.log("handleChange")
         console.log(Cliente)
       }
 

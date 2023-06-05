@@ -6,9 +6,10 @@ const FormUser = ({ InfoUser, Envio, Cambio}) => {
     return (
         <div className='container'>
             <form onChange={Cambio} onSubmit={Envio} className="formUser">
+                    <input className='UserFormInput' type="hidden"  name="Ficha" defaultValue={InfoUser.K_Cliente}/>
                 <div className='labelInput d-33'>
                     <label>Ficha</label>
-                    <input className='UserFormInput' type="text"  name="K_Cliente" defaultValue={InfoUser.K_Cliente} readOnly/>
+                    <input className='UserFormInput' type="text"  name="Ficha" defaultValue={InfoUser.Ficha}/>
                 </div>
                 <div className='labelInput d-33'>
                     <label>Nombre</label>

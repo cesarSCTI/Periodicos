@@ -6,7 +6,7 @@ import * as moment from 'moment'
 
 const TicketExample_2 = () => {
 const  dat = new Date();
-let dateAct = moment(dat).format('MM/DD/YYYY hh:mm:ss')
+let dateAct = moment(dat).format('DD/MM/YYYY hh:mm:ss')
 const navigate = useNavigate()
 const location = useLocation();
 //const { items } = location.state;

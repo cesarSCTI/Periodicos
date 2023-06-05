@@ -144,8 +144,9 @@ const ListPedidosItem = ({infoOrder}) => {
           <div className='listNameBody border'>
             <div className='d-10'>#{infoOrder.K_Pedido}</div>
             <div className='d-20'>{infoOrder.D_Cliente}</div>
-            <div className='d-10'>{infoOrder.Total}</div>
-            <div className='d-20'>{infoOrder.F_Creacion}</div>
+            <div className='d-10'>${infoOrder.Total}</div>
+            <div className='d-10'>${infoOrder.Pago_Abono}</div>
+            <div className='d-10'>{infoOrder.F_Creacion}</div>
             <div className='d-20'>
             {
               infoOrder.Estatus == "PAGADO"

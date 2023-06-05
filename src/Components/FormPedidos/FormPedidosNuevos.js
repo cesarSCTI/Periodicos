@@ -23,6 +23,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
 
     const [isOpen, setIsopen] = useState(false)
     const [vK_Cliente, setK_Cliente] = useState(0)
+    const [Ficha,setFicha] = useState(0)
     const [PedidoData,setPedidosDefaultN] = useState([])
     //
     const [Client, setClient] = useState([])
@@ -51,6 +52,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         "K_Pedido":Number(orderInfo.K_Pedido),
         "K_Cliente":Number(orderInfo.K_Cliente),
         //"K_Nombre":Number(orderInfo.K_Cliente),
+        "Ficha":Number(orderInfo.Ficha),
         "Nombre": `${orderInfo.Nombre}`,
         "tes":PedidoData,
         "Adeudo":`${orderInfo.Adeudo}`,
@@ -73,9 +75,11 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         const data = await response.json().finally()
         //setClient(data)
         setTablaClient(data)
+        console.log("Clientes")
+        console.log(data)
     }
     
-    const ActionPopup = (e,K_Cliente,Adeudo, D_Cliente) =>{
+    const ActionPopup = (e,K_Cliente,Ficha,Adeudo, D_Cliente) =>{
         e.preventDefault()
         console.log("ActionPopup "+K_Cliente+" "+D_Cliente)
         if(isOpen){
@@ -94,8 +98,14 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
             */
             formData.K_Cliente = K_Cliente
             formData.Nombre = D_Cliente
+            formData.Ficha = Ficha
+            order.K_Cliente = K_Cliente
+            order.Nombre = D_Cliente
+            order.Ficha = Ficha
             setBusqueda(D_Cliente)
             setK_Cliente(K_Cliente)
+            setFicha(Ficha)
+
             console.log("K_Cliente_F "+formData.K_Cliente)
             console.log("Total "+formData.Total_Pedido)
             //setClientF(K_Cliente)
@@ -153,6 +163,8 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         formData.Total_Pedido = Total_Pedido
         order.Total_Pedido = Total_Pedido
         order.Total = Number(Total_Pedido) + Number(Adeudo)
+        console.log(formData)
+        console.log(order)
         setTotal_Pedido(Total_Pedido) 
         //setAdeudo(Adeudo) 
         
@@ -201,6 +213,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
       //formData.K_Cliente = 
       setK_Cliente(formData.K_Cliente)
       setTotal_Pedido(formData.Total_Pedido) 
+      setFicha(formData.Ficha)
       formData.Adeudo = vAdeudo
       console.log('useEffect FormPN '+vAdeudo)
     },[formData])
@@ -228,11 +241,14 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
             })    
 
             console.log("Update "+PedidoData)
-            
+            console.log("Nuevo Pedido")
+            console.log(formData)
             console.log(JSON.stringify(formData))
             console.log(PedidoData)
+            console.log("order")
+            console.log(order)
         
-            axios.post('https://api-rest-sist-periodico.deversite.com/pedido',new URLSearchParams(formData),{
+            axios.post('https://api-rest-sist-periodico.deversite.com/pedido',new URLSearchParams(order),{
                 headers:{
                     'Content-Type':'application/x-www-form-urlencoded'
                 }
@@ -458,7 +474,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                 <div className='inputsName'>
                     <div className='pedidoFicha'>
                         <label className='label'>Ficha Cliente</label>
-                        <input type="text" name="K_Nombre" className='input' value={vK_Cliente} disabled/>
+                        <input type="text" name="K_Nombre" className='input' value={Ficha} disabled/>
                     </div>
                     {
                     /*
@@ -483,7 +499,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                             <div className="dataResult" style={{display: disabled ? "block" : "none"}}>
                                 {Client.slice(0, 15).map((value, key) => {
                                 return (
-                                    <a className="dataItem" onClick={event=>ActionPopup(event,value.K_Cliente,value.Adeudo,value.Nombre+' '+value.Apellidos)} >
+                                    <a className="dataItem" onClick={event=>ActionPopup(event,value.K_Cliente,value.Ficha,value.Adeudo,value.Nombre+' '+value.Apellidos)} >
                                     <p>{value.Nombre+' '+value.Apellidos} </p>
                                     </a>
                                 );

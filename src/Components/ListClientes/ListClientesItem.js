@@ -7,8 +7,8 @@ const ListClientesItem = ({cl}) => {
   return (
     <div className='container'>
     <div className='listNameBody border'>
-      <div className='d-10'>#{cl.K_Cliente}</div>
-      <div className='d-20'>{cl.Nombre}</div>
+      <div className='d-10'>#{cl.Ficha}</div>
+      <div className='d-20'>{cl.Nombre+' '+cl.Apellidos}</div>
       <div className='d-10'>{cl.Telefono}</div>
       <div className='d-30'>{cl.Direccion}</div>
       <div className='d-10'>${cl.Adeudo}</div>

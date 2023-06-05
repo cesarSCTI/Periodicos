@@ -14,6 +14,8 @@ export const usePetitionPedidos = () =>{
         const data = await response.json().finally()
         setPedidos(data)
         setTablaPedidos(data)
+        console.log("Pedidos")
+        console.log(data)
     }
 
     //HANDLE & FILTER
@@ -38,6 +40,7 @@ export const usePetitionPedidos = () =>{
             ...data,
             [e.target.name]: e.target.value
         })
+        console.log("fechasHandle")
         console.log(data)
     }
 
@@ -47,6 +50,7 @@ export const usePetitionPedidos = () =>{
         const dato = await response.json().finally()
         setPedidos(dato)
         setTablaPedidos(dato)
+        console.log(dato)
     }
 
     useEffect(()=>{
