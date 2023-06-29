@@ -79,11 +79,12 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         console.log(data)
     }
     
-    const ActionPopup = (e,K_Cliente,Ficha,Adeudo, D_Cliente) =>{
-        e.preventDefault()
+    const ActionPopup = (K_Cliente,Ficha,Adeudo, D_Cliente) =>{
+        //e.preventDefault()
         console.log("ActionPopup "+K_Cliente+" "+D_Cliente)
         if(isOpen){
             setIsopen(false)
+            setBusqueda('')
         }else{
             setIsopen(true)
             setDisabled(false)
@@ -138,6 +139,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     //  Pedido Default
     const  requestPedidoDefaultCD = async (K_Cliente,Adeudo)=>{
         //const date = new Date("December 5, 2022 01:15:00");
+        console.log('function requestPedidoDefaultCD')
         const date = new Date();
         var NumDay = date.getDay();
         if(NumDay==0){
@@ -154,20 +156,22 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         console.log(PedidoData)
         ///return data
         //
+        if(data.length>0)
+        {
         
-        const Total_Pedido = data.map((detalle) => parseFloat(detalle.Total))
-            .reduce((previous, current) => {
-                return previous + current;
-            }, 0);
-        console.log("requestPedidoDefaultCD Total_Pedido: "+Total_Pedido)
-        formData.Total_Pedido = Total_Pedido
-        order.Total_Pedido = Total_Pedido
-        order.Total = Number(Total_Pedido) + Number(Adeudo)
-        console.log(formData)
-        console.log(order)
-        setTotal_Pedido(Total_Pedido) 
-        //setAdeudo(Adeudo) 
-        
+            const Total_Pedido = data.map((detalle) => parseFloat(detalle.Total))
+                .reduce((previous, current) => {
+                    return previous + current;
+                }, 0);
+            console.log("requestPedidoDefaultCD Total_Pedido: "+Total_Pedido)
+            formData.Total_Pedido = Total_Pedido
+            order.Total_Pedido = Total_Pedido
+            order.Total = Number(Total_Pedido) + Number(Adeudo)
+            console.log(formData)
+            console.log(order)
+            setTotal_Pedido(Total_Pedido) 
+            //setAdeudo(Adeudo) 
+        }
     }
     
     //   Buscador Cliente
@@ -379,7 +383,35 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
         console.log(order)
         console.log(formData)
       }
-      
+        // Ficha
+        const handleChangeFicha = (e) =>{
+            console.log(e.target.value)
+            filtrarPorFicha(e.target.value)
+        }
+        //  Filtra
+        const filtrarPorFicha=(ficha)=>{
+            if(ficha>0){
+                var resultadosBusqueda = tablaClient.filter((elemento)=>{
+                    if(elemento.Ficha == ficha){
+                        return elemento;
+                    }
+                })
+                console.log(resultadosBusqueda)
+                if(resultadosBusqueda.length>0){
+                    ActionPopup(resultadosBusqueda[0].K_Cliente,resultadosBusqueda[0].Ficha,resultadosBusqueda[0].Adeudo,resultadosBusqueda[0].Nombre+' '+resultadosBusqueda[0].Apellidos)
+                }else{
+                    setIsopen(false)
+                    setBusqueda('')
+                }
+            }
+            if(ficha==0||ficha==''){
+                setIsopen(false)
+                setBusqueda('')
+            }
+            
+        }
+
+      // Devoluciones
       const handleChangeDev = (e,a) =>{
         let arr = e.target.name.split('_');
         var aux = [...PedidoData]
@@ -416,8 +448,8 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     }
 
     const requestInventario = async()=>{
-        const dat = new Date("April 15, 2023 01:15:00");
-        //const  dat = new Date();
+        //const dat = new Date("April 15, 2023 01:15:00");
+        const  dat = new Date();
         let dateAct = moment(dat).format('YYYY-MM-DD')
         console.log(dateAct)
         const response = await fetch(`https://api-rest-sist-periodico.deversite.com/inventario_dia/${dateAct}`)
@@ -474,7 +506,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                 <div className='inputsName'>
                     <div className='pedidoFicha'>
                         <label className='label'>Ficha Cliente</label>
-                        <input type="text" name="K_Nombre" className='input' value={Ficha} disabled/>
+                        <input type="text" name="K_Nombre" className='input' defaultValue={Ficha} onChange={handleChangeFicha}  /*value={Ficha}*//>
                     </div>
                     {
                     /*
@@ -499,7 +531,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                             <div className="dataResult" style={{display: disabled ? "block" : "none"}}>
                                 {Client.slice(0, 15).map((value, key) => {
                                 return (
-                                    <a className="dataItem" onClick={event=>ActionPopup(event,value.K_Cliente,value.Ficha,value.Adeudo,value.Nombre+' '+value.Apellidos)} >
+                                    <a className="dataItem" onClick={event=>ActionPopup(value.K_Cliente,value.Ficha,value.Adeudo,value.Nombre+' '+value.Apellidos)} >
                                     <p>{value.Nombre+' '+value.Apellidos} </p>
                                     </a>
                                 );
