@@ -12,7 +12,7 @@ const ClientesInterior = () => {
   const {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, openPOPUP, sureDelete, requestCliente,popPupGuardar} = useCRUDCliente()
   const navigate = useNavigate();
   const closeMensaje = () =>{
-    popPupGuardar = true
+    //popPupGuardar = true
     navigate("../",{replace:true});
   }
 

@@ -228,79 +228,81 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
     //  Crear Pedido
     const crearPedido = (e)=>{
         e.preventDefault()
-        //requestInventario();
-        const validacion = Schema.isValid(formData)
-        if(validacion){ 
-            console.log("Ante "+PedidoData)
+        if (e.key !== "Enter") {            
+            //requestInventario();
+            const validacion = Schema.isValid(formData)
+            if(validacion){ 
+                console.log("Ante "+PedidoData)
 
-            PedidoData.forEach(function(currentValue, index, arr){
-                console.log(currentValue)
-                console.log(index)
-                console.log(arr)
-                delete arr.Nombre_Producto
-                delete currentValue.Nombre_Producto
-                delete currentValue.K_Cliente
-                //currentValue.K_Pedido = 56
-                console.log(arr)
-            })    
+                PedidoData.forEach(function(currentValue, index, arr){
+                    console.log(currentValue)
+                    console.log(index)
+                    console.log(arr)
+                    delete arr.Nombre_Producto
+                    delete currentValue.Nombre_Producto
+                    delete currentValue.K_Cliente
+                    //currentValue.K_Pedido = 56
+                    console.log(arr)
+                })    
 
-            console.log("Update "+PedidoData)
-            console.log("Nuevo Pedido")
-            console.log(formData)
-            console.log(JSON.stringify(formData))
-            console.log(PedidoData)
-            console.log("order")
-            console.log(order)
-        
-            axios.post('https://api-rest-sist-periodico.deversite.com/pedido',new URLSearchParams(order),{
-                headers:{
-                    'Content-Type':'application/x-www-form-urlencoded'
-                }
-            })
-            .then(function(responseJson){
-                console.log('response '+responseJson);
-                if(responseJson.status == 200){
-                    console.log("K_Pedido "+responseJson.data.K_Pedido)
-                    //  Quitar nombre y agregar pedido
-                    
-                    PedidoData.forEach(function(currentValue, index, arr){
-                        console.log(currentValue)
-                        delete currentValue.Nombre_Producto
-                        currentValue.K_Pedido = `${responseJson.data.K_Pedido}`
-                        console.log(arr)
-                    })
-
-                    console.log("update pedido")
-                    console.log(JSON.stringify(PedidoData));
-                    
-                    //  Agregar Pedido Detalle
-                    crearPdidoDetalle(PedidoData)
-                    
-                    /*
-                    axios.post('https://api-rest-sist-periodico.deversite.com/crear_pedido_detalle',new URLSearchParams(PedidoData),{
-                    /*    
+                console.log("Update "+PedidoData)
+                console.log("Nuevo Pedido")
+                console.log(formData)
+                console.log(JSON.stringify(formData))
+                console.log(PedidoData)
+                console.log("order")
+                console.log(order)
+            
+                axios.post('https://api-rest-sist-periodico.deversite.com/pedido',new URLSearchParams(order),{
                     headers:{
-                            'Content-Type':'application/x-www-form-urlencoded'
-                        }
-                    */
-                    /*    headers:{
-                        }
-                    })
-                    .then(function(response){
-                        console.log('response '+response.data);
-                        if(response.status == 200){
-                            navigate("../pedidos",{replace:true});
-                        }
-                    })
-                    .catch(function(error){
-                        console.log(error)
-                    })    
-                    */                     
-                }                
-            })
-            .catch(function(error){
-                console.log(error)
-            })      
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }
+                })
+                .then(function(responseJson){
+                    console.log('response '+responseJson);
+                    if(responseJson.status == 200){
+                        console.log("K_Pedido "+responseJson.data.K_Pedido)
+                        //  Quitar nombre y agregar pedido
+                        
+                        PedidoData.forEach(function(currentValue, index, arr){
+                            console.log(currentValue)
+                            delete currentValue.Nombre_Producto
+                            currentValue.K_Pedido = `${responseJson.data.K_Pedido}`
+                            console.log(arr)
+                        })
+
+                        console.log("update pedido")
+                        console.log(JSON.stringify(PedidoData));
+                        
+                        //  Agregar Pedido Detalle
+                        crearPdidoDetalle(PedidoData)
+                        
+                        /*
+                        axios.post('https://api-rest-sist-periodico.deversite.com/crear_pedido_detalle',new URLSearchParams(PedidoData),{
+                        /*    
+                        headers:{
+                                'Content-Type':'application/x-www-form-urlencoded'
+                            }
+                        */
+                        /*    headers:{
+                            }
+                        })
+                        .then(function(response){
+                            console.log('response '+response.data);
+                            if(response.status == 200){
+                                navigate("../pedidos",{replace:true});
+                            }
+                        })
+                        .catch(function(error){
+                            console.log(error)
+                        })    
+                        */                     
+                    }                
+                })
+                .catch(function(error){
+                    console.log(error)
+                })      
+            }
         }
     }
 
@@ -385,8 +387,17 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
       }
         // Ficha
         const handleChangeFicha = (e) =>{
-            console.log(e.target.value)
-            filtrarPorFicha(e.target.value)
+            console.log(e.key)
+            if (e.key === "Tab") {
+                console.log(e.target.value)
+                filtrarPorFicha(e.target.value)
+            }
+            if(e.key === "Backspace"||e.key === "Delete")
+            {
+                console.log(e.key)
+                setIsopen(false)
+                setBusqueda('')
+            }
         }
         //  Filtra
         const filtrarPorFicha=(ficha)=>{
@@ -506,7 +517,7 @@ const FormPedidosNuevos = ({orderInfo,placeholder}) => {
                 <div className='inputsName'>
                     <div className='pedidoFicha'>
                         <label className='label'>Ficha Cliente</label>
-                        <input type="text" name="K_Nombre" className='input' defaultValue={Ficha} onChange={handleChangeFicha}  /*value={Ficha}*//>
+                        <input type="text" name="K_Nombre" className='input' defaultValue={Ficha} onKeyDown={handleChangeFicha} /*value={Ficha}*//>
                     </div>
                     {
                     /*

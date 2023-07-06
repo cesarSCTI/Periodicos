@@ -17,6 +17,8 @@ export const useCRUDCliente = () =>{
     const [isLoading, setIsloading] = useState(true)
     const [sureDelete, setSureDelete] = useState(false)
     const [popPupGuardar , setpopPupGuardar] = useState(false)
+    const [popPupNotificacionCliente, setpopPupNotificacionCliente] = useState(false)
+    const [dataClientesRep, setdataClientesRep] = useState([]) 
     const navigate = useNavigate()
 
   //openPOPUP DELETE
@@ -76,7 +78,19 @@ export const useCRUDCliente = () =>{
             }} )
           .then(function (response) {
             console.log(response);
-            setpopPupGuardar(true)
+            if(response.status == 200){
+              console.log("entro")
+              console.log(response.data.data)
+              if(response.data.data.K_Cliente == 0){
+                  console.log(response.data.messages)
+                  console.log(response.data.clientes)
+                  setdataClientesRep(response.data.clientes)
+                  setpopPupNotificacionCliente(true)
+              }else{
+                setpopPupGuardar(true)
+              }
+            }
+            //setpopPupGuardar(true)
           })
           .catch(function (error) {
             console.log(error);
@@ -85,10 +99,11 @@ export const useCRUDCliente = () =>{
         else{
           
         }
+        /*
         setTimeout(()=>{
           navigate("../clientes", { replace: true });
         },2000)
-        
+        */
     }
 
     //Registro de cambios segun el input
@@ -112,5 +127,5 @@ export const useCRUDCliente = () =>{
         requestCliente()
     },[])
 */
-    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, requestCliente, sureDelete, openPOPUP,popPupGuardar}
+    return {Cliente, isLoading, parameter, ClienteUpdate, handleChange, deleteCliente, requestCliente, sureDelete, openPOPUP,popPupGuardar,popPupNotificacionCliente,dataClientesRep}
 }
