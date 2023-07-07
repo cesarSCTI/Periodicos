@@ -93,7 +93,7 @@ const ListPedidosItem = ({infoOrder}) => {
           K_Pedido: infoOrder.K_Pedido,
           adeudo:infoOrder.Adeudo,
           pago:infoOrder.Pago_Abono,
-          ficha:infoOrder.K_Cliente,
+          ficha:infoOrder.Ficha,
           cliente:infoOrder.D_Cliente,
           noPedido:infoOrder.K_Pedido
         }
@@ -163,7 +163,10 @@ const ListPedidosItem = ({infoOrder}) => {
                 //<SuccessVer F_Click={ActionPopup}/>
                 //<Link to={`/pedidos/${infoOrder.K_Pedido}`}><SuccessVer/></Link>
                 infoOrder.Estatus == "GENERADO"
-                ?<SuccessPago F_Click={ActionPopup}/>
+                ?<>
+                <SuccessPago F_Click={ActionPopup}/>
+                <SuccessTicket F_Click={ticketPrint_2}/>
+                </>
                 :<></>
                 //<Link to={`https://api-rest-sist-periodico.deversite.com/login/alan/12345`}><SuccessVer/></Link>
               }

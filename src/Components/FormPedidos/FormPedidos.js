@@ -353,6 +353,7 @@ const FormPedidos = ({PedidoData, orderInfo}) => {
                 ?<div className='Table'> 
                 <Success Text="-Guardar" F_Click={()=>setPopPupGuardar(true)}/>
                 <Success Text="Pagar" F_Click={ActionPopup} />
+                <Success Text="Ticket" F_Click={ticketPrint_2}/>
                 </div>
                 :orderInfo.Estatus == "CANCELADO"
                 ?<div className='Table'> 
