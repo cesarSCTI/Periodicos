@@ -22,6 +22,10 @@ export const useClientsPetition = () => {
         filtrar(e.target.value);
     }
 
+    const handleBusquedaFicha = (e) =>{
+        filtrarFicha(e.target.value)
+    }
+
     //BUSQUEDA
     const filtrar=(terminoBusqueda)=>{
         var resultadosBusqueda=tablaClient.filter((elemento)=>{
@@ -30,6 +34,15 @@ export const useClientsPetition = () => {
           }
         });
         console.log(resultadosBusqueda)
+        setClient(resultadosBusqueda);
+    }
+    // BUSQUEDA FICHA
+    const filtrarFicha=(terminoBusqueda)=>{
+        var resultadosBusqueda = tablaClient.filter((elemento)=>{
+            if(elemento.Ficha.toString().includes(terminoBusqueda)){
+                return elemento
+            }
+        })
         setClient(resultadosBusqueda);
     }
     //ticketAdeudo
@@ -45,7 +58,7 @@ export const useClientsPetition = () => {
         requestClient()
     },[])
 
-    return {tablaClient, Client, setClient, handleBusqueda,ticketAdeudo}
+    return {tablaClient, Client, setClient, handleBusqueda,ticketAdeudo,handleBusquedaFicha}
 }
 
 /*export const RequestAPI = (url) => {

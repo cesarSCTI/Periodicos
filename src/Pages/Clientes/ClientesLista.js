@@ -7,11 +7,13 @@ import ListClientes from '../../Components/ListClientes/ListClientes'
 import ListClientesItem from '../../Components/ListClientes/ListClientesItem'
 import Loader from '../../Components/Loader/Loader'
 import {useClientsPetition} from './HooksClientes';
+import BuscadorFicha from '../../Components/Buscador/BuscardorFicha'
+import BuscadorNombre from '../../Components/Buscador/BuscardorNombreCliente'
 
 
 const ClientesLista = () => {
   const navigate = useNavigate(); 
-  const {Client, handleBusqueda,ticketAdeudo}  = useClientsPetition()
+  const {Client, handleBusqueda,ticketAdeudo,handleBusquedaFicha}  = useClientsPetition()
   //ticketAdeudo
   /*
   const ticketAdeudo =() =>{
@@ -35,7 +37,10 @@ const ClientesLista = () => {
     </div>
       
     </Header>
-      <Buscador Cambio={handleBusqueda}/>
+    <form className='formListBuscadorCliente'> 
+        <BuscadorFicha Cambio={handleBusquedaFicha}/>
+        <BuscadorNombre Cambio={handleBusqueda}/>
+      </form>
       <ListClientes/>
       {
        !Client 

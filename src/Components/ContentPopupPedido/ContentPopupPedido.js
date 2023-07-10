@@ -14,6 +14,7 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
   const Abonos = resta;
 
   const[isOpen,setIsopen] = useState(true)
+  const[popPupTicket,setPopPupTicket] = useState(false)
   
   /*
   const [formData,setformData] = useState({ 
@@ -62,17 +63,34 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
         if(response.status == 200){
           exist = true;
           setIsopen(false)        
-          
+          ticketPrint_2()
         }
       })
       .catch(function(error){
         console.log(error)
       })
+      /*
         setTimeout(()=>{
             //navigate("/pedidos", { replace: true });
             navigate("/");
           },5000)
+      */
     }
+  }
+
+  const ticketPrint_2 = () =>{
+    //console.log(PedidoData)
+    navigate('/ticket_2', {
+        state:{
+          //items:PedidoData,
+          K_Pedido: orderInfo.K_Pedido,
+          adeudo:orderInfo.Adeudo,
+          pago:orderInfo.Pago_Abono,
+          ficha:orderInfo.Ficha,
+          cliente:orderInfo.D_Cliente,
+          noPedido:orderInfo.K_Pedido
+        }
+      });
   }
 
   const handleChange = (e) =>{

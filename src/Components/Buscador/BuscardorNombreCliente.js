@@ -2,23 +2,23 @@ import React, {useState} from 'react'
 import './Buscador.css';
 
 
-const Buscador = ({Text="Buscar", Enviar, Cambio}) => {
+const BuscadorNombre = ({Text="Buscar", Enviar, Cambio}) => {
 
   const [pop, setPop] = useState(false);
 
 
   return (
-    
+    /*
     <div className='container'>
-        <div className="Buscador">
+        <div className="Buscador">*/
           <input type="text" 
-          className='buscadorInput'
+          className='buscadorNombreInput'
            placeholder='Buscar por Nombre' 
            name="Buscador" 
            onChange={Cambio}/>
-        </div>
-    </div>
+    /*    </div>
+    </div>*/
   )
 }
 
-export default Buscador
+export default BuscadorNombre

@@ -1,3 +1,38 @@
+.formListBuscadorCliente {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+.BuscadorFicha{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 30px 0;
+}
+.buscadorFichaInput{
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px #ececec;
+    border:solid 1px #ececec;
+    outline: none;
+    width: 12%;
+    margin-right: 10px;
+}
+.buscadorNombreInput {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px #ececec;
+    border: solid 1px #ececec;
+    outline: none;
+    width: 50%;
+    margin-right: 10px;
+}
 .Buscador{
     width: 50%;
     display: flex;
