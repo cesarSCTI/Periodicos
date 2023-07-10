@@ -85,7 +85,7 @@ const ContentPopupPedido = ({F_Click_Cerrar,orderInfo}) => {
           //items:PedidoData,
           K_Pedido: orderInfo.K_Pedido,
           adeudo:orderInfo.Adeudo,
-          pago:orderInfo.Pago_Abono,
+          pago:formData.Pago_Abono,
           ficha:orderInfo.Ficha,
           cliente:orderInfo.D_Cliente,
           noPedido:orderInfo.K_Pedido
