@@ -90,3 +90,10 @@ export const SuccessTicket = ({F_Click}) =>{
     </button>
   )
 }
+export const SuccessActualizar = ({F_Click}) =>{
+  return (
+    <button className='btn actions success-item' onClick={F_Click}> 
+      <i class="bx bx-refresh icon-item"></i>
+    </button>
+  )
+}

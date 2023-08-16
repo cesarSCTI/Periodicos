@@ -34,5 +34,5 @@ export const usePetitionPedidosCobranza =() =>{
         requestPedidosCobranza()
     },[])
 
-    return{tablaPedidos,Cobranza,setPedidos,handleBusqueda}
+    return{tablaPedidos,Cobranza,setPedidos,handleBusqueda,requestPedidosCobranza}
 }

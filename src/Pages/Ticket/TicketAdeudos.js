@@ -66,7 +66,7 @@ useEffect(()=>{
                     data.map((ele)=>{
                         return (
                                 <tr>
-                                    <td>{ele.K_Cliente}</td>
+                                    <td>{ele.Ficha}</td>
                                     <td>{ele.Nombre+' '+ele.Apellidos}</td>
                                     <td>{ele.Adeudo}</td>
                                 </tr>
