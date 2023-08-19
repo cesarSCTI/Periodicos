@@ -25,7 +25,7 @@ const FormUser = ({ InfoUser, Envio, Cambio}) => {
                 </div>
                 <div className='labelInput d-50'>
                     <label>Adeudo</label>
-                    <input className='UserFormInput onlyRead' name="Adeudo" type="text" defaultValue={InfoUser.Adeudo} readOnly/>
+                    <input className='UserFormInput' name="Adeudo" type="text" defaultValue={InfoUser.Adeudo}/>
                 </div>
                 <div className='labelInput d-50'>
                     <label>Telefono</label>

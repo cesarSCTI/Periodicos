@@ -61,7 +61,7 @@ export const useCRUDCliente = () =>{
         Apellidos: yup.string().required('campo obligatorio'),
         Telefon: yup.number().max(10),
         Direccion: yup.string().required('campo obligatorio'),
-        Adeudo: yup.number().min(0)
+        Adeudo: yup.number()
       });
 
     const ClienteUpdate = (e) => { 
@@ -113,7 +113,7 @@ export const useCRUDCliente = () =>{
           ...Cliente,
           [e.target.name]: e.target.value,
           K_Cliente : Number(Cliente.K_Cliente),
-          Adeudo: Number(Cliente.Adeudo),
+          //Adeudo: Number(Cliente.Adeudo),
           B_Activo: Number(Cliente.B_Activo),
           //Ficha:Number(Cliente.Ficha)
         })
